@@ -1,3 +1,13 @@
+# Introduction to React
+Welcome to the React Workshop! In this workshop, you will learn React concepts by building a stock market application with a search functionality and stock metadata display.
+
+## Workshop Structure
+* Part 1: Environment Setup
+* Part 2: Creating React Components (Sock Card)
+* Part 3: API Integration and Data Fetching
+* Part 4: Building the Complete Stocks Application
+* Part 5: Deployment
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
