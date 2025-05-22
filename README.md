@@ -2,11 +2,11 @@
 Welcome to the React Workshop! In this workshop, you will learn React concepts by building a stock market application with a search functionality and stock metadata display.
 
 ## Workshop Structure
-* Part 1: Environment Setup
-* Part 2: Creating React Components (Sock Card)
-* Part 3: API Integration and Data Fetching
-* Part 4: Building the Complete Stocks Application
-* Part 5: Deployment
+- Part 1: Environment Setup
+- Part 2: Creating React Components (Sock Card)
+- Part 3: API Integration and Data Fetching
+- Part 4: Building the Complete Stocks Application
+- Part 5: Deployment
 
 ## Part 1: Environment Setuyp
 ### Prerequisites
@@ -22,7 +22,8 @@ Node.js is a JavaScript runtime that allows you to run JavaScript outside of the
 
 **Option A: Direct Download**
 - Visit [nodejs.org](https://nodejs.org/)
-- Download the LTS (Long Term Support) version
+- Download the **Current** version (latest features) or **LTS** version (more stable)
+- For this workshop, we recommend using the **Current** version for the latest features
 - Follow the installation wizard
 
 **Option B: Using Package Managers**
@@ -30,26 +31,31 @@ Node.js is a JavaScript runtime that allows you to run JavaScript outside of the
 **macOS:**
 ```bash
 # Using Homebrew
+# Using Homebrew - installs latest version
 brew install node
 
-# Using MacPorts
-sudo port install nodejs18
+# To install specific latest version
+brew install node@20  # Replace 20 with current major version
 ```
 
 **Windows:**
 ```bash
-# Using Chocolatey
+# Using Chocolatey - installs latest version
 choco install nodejs
 
-# Using Winget
+# Using Winget - installs latest version
 winget install OpenJS.NodeJS
 ```
 
 **Linux (Ubuntu/Debian):**
 ```bash
-# Using apt
-curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+# Using apt - for latest version
+curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
 sudo apt-get install -y nodejs
+
+# Using snap - installs latest version
+sudo snap install node --classic
+```
 
 **Verify Installation:**
 ```bash
@@ -69,18 +75,35 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 # Reload your terminal or run:
 source ~/.bashrc
 
-# Install and use latest LTS Node.js
+# Install and use the latest Node.js version
+nvm install node        # Installs the latest version
+nvm use node           # Uses the latest version
+
+# Alternative: Install latest LTS if you prefer stability
 nvm install --lts
 nvm use --lts
+
+# List available versions
+nvm list-remote        # See all available versions
 ```
 
 **Windows:**
 ```bash
 # Install nvm-windows from: https://github.com/coreybutler/nvm-windows/releases
 # Then in Command Prompt or PowerShell:
+
+# Install latest version
+nvm install latest
+nvm use latest
+
+# Or install latest LTS
 nvm install lts
 nvm use lts
+
+# List installed versions
+nvm list
 ```
+
 
 ### 3. Visual Studio Code
 
