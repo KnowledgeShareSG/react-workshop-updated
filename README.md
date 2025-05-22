@@ -147,12 +147,11 @@ git --version
 
 
 ## Project Setup
-# Install dependencies
+### Install dependencies
 npm install
 
-# Start development server
+### Start development server
 npm run dev
-```
 
 
 # React + TypeScript + Vite
