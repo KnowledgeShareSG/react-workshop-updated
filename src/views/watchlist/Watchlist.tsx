@@ -35,22 +35,29 @@ export const Watchlist = () => {
                 <Table>
                     <TableCaption>A list of your recent invoices.</TableCaption>
                     <TableHeader>
-                        <TableRow>
-                            <TableHead className="text-left md:table-cell">Invoice</TableHead>
-                            <TableHead className="text-left hidden md:table-cell">Status</TableHead>
-                            <TableHead className="text-left md:table-cell">Method</TableHead>
-                            <TableHead className="text-left md:table-cell">Date</TableHead>
-                            <TableHead className="text-left hidden md:table-cell">Amount</TableHead>
+                        <TableRow className="h-24 xl:h-12">
+                            <TableHead className="text-left xl:table-cell">Invoice</TableHead>
+                            <TableHead className="text-left hidden xl:table-cell">Status</TableHead>
+                            <TableHead className="text-left xl:table-cell">Method</TableHead>
+                            <TableHead className="text-left xl:table-cell">Date</TableHead>
+                            <TableHead className="text-left hidden xl:table-cell">Amount</TableHead>
                         </TableRow>
                     </TableHeader>
 
                     <TableBody>
-                        <TableRow>
-                            <TableCell className="text-left md:table-cell">INV001</TableCell>
-                            <TableCell className="text-left hidden md:table-cell">Paid</TableCell>
-                            <TableCell className="text-left md:table-cell">Credit Card</TableCell>
-                            <TableCell className="text-left md:table-cell">May 21, 2025</TableCell>
-                            <TableCell className="text-left hidden md:table-cell">$250.00</TableCell>
+                        <TableRow className="h-24 xl:h-12">
+                            <TableCell className="text-left xl:table-cell">INV001</TableCell>
+                            <TableCell className="text-left hidden xl:table-cell">Paid</TableCell>
+                            <TableCell className="text-left xl:table-cell">Credit Card</TableCell>
+                            <TableCell className="text-left xl:table-cell">May 21, 2025</TableCell>
+                            <TableCell className="text-left hidden xl:table-cell">$250.00</TableCell>
+                        </TableRow>
+                        <TableRow className="h-24 xl:h-12">
+                            <TableCell className="text-left xl:table-cell">INV001</TableCell>
+                            <TableCell className="text-left hidden xl:table-cell">Paid</TableCell>
+                            <TableCell className="text-left xl:table-cell">Credit Card</TableCell>
+                            <TableCell className="text-left xl:table-cell">May 21, 2025</TableCell>
+                            <TableCell className="text-left hidden xl:table-cell">$250.00</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
