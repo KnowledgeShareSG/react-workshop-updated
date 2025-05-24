@@ -5,6 +5,7 @@ import './styles/App.css'
 import {Button} from "@/components/ui/button";
 import {CircleX} from "lucide-react";
 import {Trash2} from "lucide-react";
+import {StockSearch} from "@/views/stock-search/StockSearch.tsx";
 
 function App() {
     const [count, setCount] = useState(0)
@@ -34,6 +35,7 @@ function App() {
                     <span>Delete</span>
                 </Button>
             </div>
+            <StockSearch />
             <p className="read-the-docs">
                 Click on the Vite and React logos to learn more
             </p>
