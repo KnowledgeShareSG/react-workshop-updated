@@ -9,8 +9,7 @@ export const WatchlistPage = () => {
                 <h1 className='text-3xl font-bold text-gray-800'>Watchlist</h1>
                 <div className='flex items-center gap-3 sm:gap-4'>
                     <StockSearch />
-                    <Button 
-                        variant="outline" 
+                    <Button
                         icon={<SquarePen className="size-4" />}
                         className="whitespace-nowrap"
                     >

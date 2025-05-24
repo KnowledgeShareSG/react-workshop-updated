@@ -52,8 +52,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(buttonVariants({ variant, size, className }))}
         {...props}
       >
-        {icon && <span className="mr-1">{icon}</span>}
-        {children}
+        {icon && <span className="sm:mr-1">{icon}</span>}
+        {children && <span className="hidden sm:inline">{children}</span>}
       </Comp>
     )
   }
