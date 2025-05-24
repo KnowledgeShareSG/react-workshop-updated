@@ -18,8 +18,8 @@ export interface Stock {
 export const StockSearch = () => {
     const {results, query, setQuery, loading} = useStockSearch()
     return (
-        <div className="relative w-64 ">
-            <Command className="rounded-md border">
+        <div className="relative w-[280px]">
+            <Command className="w-full border border-zinc-200">
                 <CommandInput placeholder="Search stocks by name or symbol..."
                               value={query}
                               onValueChange={setQuery}/>
