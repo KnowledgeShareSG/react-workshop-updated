@@ -1,8 +1,8 @@
 
 import './styles/App.css'
-import {WatchlistPage} from "@/views/watchlist/WatchlistPage.tsx";
+import {Watchlist} from "@/views/watchlist/Watchlist.tsx";
 
 function App() {
-    return (<WatchlistPage />)
+    return (<Watchlist />)
 }
 export default App

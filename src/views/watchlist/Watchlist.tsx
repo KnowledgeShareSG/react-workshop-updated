@@ -2,7 +2,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {SquarePen} from "lucide-react";
 import {StockSearch} from "@/views/stock-search/StockSearch.tsx";
 
-export const WatchlistPage = () => {
+export const Watchlist = () => {
     return (
         <div className='p-6 mx-auto'>
             <div className='flex items-center justify-between gap-4 flex-wrap mb-6'>
