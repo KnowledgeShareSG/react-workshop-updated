@@ -1,23 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from './button';
-import { CircleX, Trash2 } from 'lucide-react';
+import type {Meta, StoryObj} from '@storybook/react';
+import {Button} from './button';
+import {CircleX, Trash2} from 'lucide-react';
 
 const meta: Meta<typeof Button> = {
-    title: 'Example/Button',
+    title: 'Component/Button',
     component: Button,
     tags: ['autodocs'],
     argTypes: {
         variant: {
-            control: {
-                control: { type: "select" },
-                options: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
-            },
+            control: {type: "select"},
+            options: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
         },
         size: {
-            control: {
-                control: { type: "select" },
-                options: ['default', 'sm', 'lg', 'icon'],
-            },
+            control: {type: "select"},
+            options: ['default', 'sm', 'lg', 'icon'],
         },
         icon: {
             control: false,
@@ -41,7 +37,7 @@ export const Cancel: Story = {
     args: {
         variant: 'outline',
         children: 'Cancel',
-        icon: <CircleX className="h-4 w-4" />,
+        icon: <CircleX className="h-4 w-4"/>,
     },
 }
 
@@ -49,6 +45,6 @@ export const Trash: Story = {
     args: {
         variant: 'default',
         children: 'Delete',
-        icon: <Trash2 className="h-4 w-4" />,
+        icon: <Trash2 className="h-4 w-4"/>,
     },
 }
