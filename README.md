@@ -3,12 +3,52 @@ Welcome to the React Workshop! In this workshop, you will learn React concepts b
 
 ## Workshop Structure
 - Part 1: Environment Setup
-- Part 2: Creating React Components (Sock Card)
+- Part 2: Creating React Components (Stock Card)
 - Part 3: API Integration and Data Fetching
 - Part 4: Building the Complete Stocks Application
 - Part 5: Deployment
 
-## Part 1: Environment Setuyp
+## UI Components with shadcn/ui
+This project uses [shadcn/ui](https://ui.shadcn.com/) for UI components. shadcn/ui provides a collection of reusable components built with Radix UI and Tailwind CSS.
+
+### Dependencies
+The following dependencies are required for shadcn/ui:
+- @radix-ui/react-slot: For the Slot primitive component
+- class-variance-authority: For creating variant classes
+- clsx: For conditionally constructing className strings
+- tailwind-merge: For merging Tailwind CSS classes
+- tailwindcss: For utility-first CSS framework
+- lucide-react: For icons
+
+### Available Components
+- Button: A versatile button component with various styles and sizes
+
+### How to Use shadcn/ui Components
+1. Import the component from the components directory:
+   ```tsx
+   import { Button } from '@/components/ui/button'
+   ```
+
+2. Use the component in your JSX:
+   ```tsx
+   <Button variant="default">Click me</Button>
+   ```
+
+3. Available button variants:
+   - default: Primary button style
+   - outline: Button with an outline
+   - secondary: Secondary button style
+   - destructive: For destructive actions
+   - ghost: Button without background
+   - link: Button that looks like a link
+
+4. Available button sizes:
+   - default: Standard size
+   - sm: Small size
+   - lg: Large size
+   - icon: Square button for icons
+
+## Part 1: Environment Setup
 ### Prerequisites
 
 Before we start, you will need to install the following tools on your system:
