@@ -11,21 +11,13 @@ export const useStockSearch = () => {
             setResults([]);
             return;
         }
-
         const fetchStocks = async () => {
             setLoading(true);
-
             try {
                 const response = await fetch(
                     `https://octopus-app-3grc6.ondigitalocean.app/yahoo/search?q=${encodeURIComponent(query)}`
                 );
-
-                if (!response.ok) {
-                    throw new Error(`API error: ${response.status}`);
-                }
-
                 const data = await response.json();
-                console.log(data);
                 setResults(data.quotes || []);
             } catch (err) {
                 console.error('Error fetching stock data:', err);
@@ -34,7 +26,6 @@ export const useStockSearch = () => {
                 setLoading(false);
             }
         };
-
         fetchStocks();
 
         return () => {

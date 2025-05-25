@@ -1,24 +1,66 @@
-import { Button } from "@/components/ui/button.tsx";
-import { SquarePen } from "lucide-react";
-import { StockSearch } from "@/views/stock-search/StockSearch.tsx";
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
+import {Button} from "@/components/ui/button.tsx";
+import {SquarePen} from "lucide-react";
+import {StockSearch, type Stock} from "@/views/stock-search/StockSearch.tsx";
+
+import {useEffect, useState} from "react";
+import {WatchlistTable} from "@/views/watchlist/WatchlistTable.tsx";
+import {Dialog, DialogContent, DialogTitle, DialogTrigger} from "@/components/ui/dialog.tsx";
+const WATCHLIST_KEY = "watchlist";
 
 export const Watchlist = () => {
+    const [watchlist, setWatchlist] = useState<Stock[]>([]);
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        const stored = localStorage.getItem(WATCHLIST_KEY);
+        if (stored) {
+            try {
+                const parsed: Stock[] = JSON.parse(stored);
+                setWatchlist((prev) => [...prev, ...parsed]);
+            } catch {
+                setWatchlist([]);
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem(WATCHLIST_KEY, JSON.stringify(watchlist));
+    }, [watchlist]);
+
+    const handleStockAdd = (stock: Stock) => {
+        setWatchlist((prev) => {
+            const alreadyExists = prev.some((s) => s.symbol === stock.symbol);
+            if (alreadyExists) return prev;
+            return [...prev, stock];
+        });
+    };
+
     return (
         <div>
             <h1 className="text-2xl font-bold text-gray-800 mb-6">Watchlist</h1>
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
                 <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-center sm:justify-end">
                     <div className="w-full sm:w-[280px]">
-                        <StockSearch onSelect={() => {}} />
+                        <Dialog open={open} onOpenChange={setOpen}>
+                            <DialogTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    className="w-full justify-start text-muted-foreground"
+                                >
+                                    Search stocks...
+                                </Button>
+                            </DialogTrigger>
+
+                            <DialogContent className="p-0 max-w-md w-full sm:w-[500px] top-34 translate-y-0 overflow-hidden">
+                                <DialogTitle className="sr-only">Search Stocks</DialogTitle>
+                                <StockSearch
+                                    onSelect={(stock) => {
+                                        handleStockAdd(stock);
+                                        setOpen(false);
+                                    }}
+                                />
+                            </DialogContent>
+                        </Dialog>
                     </div>
                     <Button>
                         <SquarePen className="size-4 mr-2" />
@@ -26,35 +68,8 @@ export const Watchlist = () => {
                     </Button>
                 </div>
             </div>
-            <div className="bg-white px-0 py-6 overflow-x-auto flex-1">
-                <Table>
-                    <TableCaption>A list of your recent invoices.</TableCaption>
-                    <TableHeader>
-                        <TableRow className="h-24 xl:h-12">
-                            <TableHead className="text-left xl:table-cell">Invoice</TableHead>
-                            <TableHead className="text-left hidden xl:table-cell">Status</TableHead>
-                            <TableHead className="text-left xl:table-cell">Method</TableHead>
-                            <TableHead className="text-left xl:table-cell">Date</TableHead>
-                            <TableHead className="text-left hidden xl:table-cell">Amount</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        <TableRow className="h-24 xl:h-12">
-                            <TableCell className="text-left xl:table-cell">INV001</TableCell>
-                            <TableCell className="text-left hidden xl:table-cell">Paid</TableCell>
-                            <TableCell className="text-left xl:table-cell">Credit Card</TableCell>
-                            <TableCell className="text-left xl:table-cell">May 21, 2025</TableCell>
-                            <TableCell className="text-left hidden xl:table-cell">$250.00</TableCell>
-                        </TableRow>
-                        <TableRow className="h-24 xl:h-12">
-                            <TableCell className="text-left xl:table-cell">INV001</TableCell>
-                            <TableCell className="text-left hidden xl:table-cell">Paid</TableCell>
-                            <TableCell className="text-left xl:table-cell">Credit Card</TableCell>
-                            <TableCell className="text-left xl:table-cell">May 21, 2025</TableCell>
-                            <TableCell className="text-left hidden xl:table-cell">$250.00</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
+            <div className="mt-5 bg-white px-0 py-6 overflow-x-auto">
+                <WatchlistTable watchListData={watchlist}/>
             </div>
         </div>
     );
