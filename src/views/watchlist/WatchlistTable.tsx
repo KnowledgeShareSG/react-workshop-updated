@@ -7,13 +7,17 @@ import {
     TableHeader,
     TableRow} from "@/components/ui/table.tsx";
 import type {Stock} from "@/views/stock-search/StockSearch.tsx";
+import {useWatchlistPerformance} from "@/hooks/useWatchlistPerformance.ts";
 
 export interface WatchlistTableProps {
     watchListData: Stock[]
 }
 export const WatchlistTable = ({watchListData}: WatchlistTableProps) => {
+    const { data, loading } = useWatchlistPerformance(watchListData);
+    console.log(data);
+    if (loading) return <div>Loading watchlist...</div>;
     return <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
+        <TableCaption>A list of your recent watchlist.</TableCaption>
         <TableHeader>
             <TableRow className="h-24 xl:h-12">
                 <TableHead className="text-left xl:table-cell">Name</TableHead>
@@ -25,13 +29,13 @@ export const WatchlistTable = ({watchListData}: WatchlistTableProps) => {
         </TableHeader>
 
         <TableBody>
-            {watchListData && watchListData.map((stock) => (
+            {data && data.map((data) => (
                 <TableRow className="h-24 xl:h-12">
-                    <TableCell className="text-left xl:table-cell">{stock.shortname}</TableCell>
-                    <TableCell className="text-left hidden xl:table-cell">{stock.quoteType}</TableCell>
-                    <TableCell className="text-left xl:table-cell">{stock.score}</TableCell>
-                    <TableCell className="text-left xl:table-cell">{stock.score}</TableCell>
-                    <TableCell className="text-left hidden xl:table-cell">{stock.index}</TableCell>
+                    <TableCell className="text-left xl:table-cell">{data.shortname}</TableCell>
+                    <TableCell className="text-left hidden xl:table-cell">{data.quoteType.toLowerCase()}</TableCell>
+                    <TableCell className="text-left xl:table-cell">{data.currentPrice?.toFixed(2)}</TableCell>
+                    <TableCell className="text-left xl:table-cell">{data.changeInPercent}</TableCell>
+                    <TableCell className="text-left hidden xl:table-cell">{data.index}</TableCell>
                 </TableRow>
             ))}
         </TableBody>
