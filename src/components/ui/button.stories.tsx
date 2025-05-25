@@ -54,3 +54,15 @@ export const Trash: Story = {
         ),
     },
 }
+
+export const WithCustomClass: Story = {
+    args: {
+        variant: 'default',
+        children: (
+            <>
+                <Trash2 className="mr-2 h-4 w-4"/> Delete
+            </>
+        ),
+        className: '...',
+    },
+}

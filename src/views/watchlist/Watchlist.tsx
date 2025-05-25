@@ -13,23 +13,13 @@ import {
 } from "@/components/ui/table";
 
 export const Watchlist = () => {
-    const [watchlist, setWatchlist] = useState<Stock[]>([]);
-
-    const handleStockAdd = (stock: Stock) => {
-        setWatchlist((prev: Stock[]) => {
-            const alreadyExists = prev.some((s: Stock) => s.symbol === stock.symbol);
-            if (alreadyExists) return prev;
-            return [...prev, stock];
-        });
-    };
-
     return (
         <div>
             <h1 className="text-2xl font-bold text-gray-800 mb-6">Watchlist</h1>
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
                 <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-center sm:justify-end">
                     <div className="w-full sm:w-[280px]">
-                        <StockSearch onSelect={handleStockAdd} />
+                        <StockSearch onSelect={() => {}} />
                     </div>
                     <Button>
                         <SquarePen className="size-4 mr-2" />
