@@ -4,10 +4,11 @@ import {StockSearch, type Stock} from "@/views/stock-search/StockSearch.tsx";
 
 import {useState} from "react";
 import {WatchlistTable} from "@/views/watchlist/WatchlistTable.tsx";
+import {Dialog, DialogContent, DialogTitle, DialogTrigger} from "@/components/ui/dialog.tsx";
 
 export const Watchlist = () => {
     const [watchlist, setWatchlist] = useState<Stock[]>([]);
-    console.log(watchlist);
+    const [open, setOpen] = useState(false);
     const handleStockAdd = (stock: Stock) => {
         setWatchlist((prev) => {
             const alreadyExists = prev.some((s) => s.symbol === stock.symbol);
@@ -22,10 +23,28 @@ export const Watchlist = () => {
                 <h1 className="w-full text-center sm:w-auto sm:text-left text-2xl font-bold text-gray-800">
                     Watchlist
                 </h1>
-
                 <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-end">
                     <div className="w-full sm:w-[280px]">
-                        <StockSearch onSelect={handleStockAdd}/>
+                        <Dialog open={open} onOpenChange={setOpen}>
+                            <DialogTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    className="w-full justify-start text-muted-foreground"
+                                >
+                                    Search stocks...
+                                </Button>
+                            </DialogTrigger>
+
+                            <DialogContent className="p-0 max-w-md w-full sm:w-[500px] top-34 translate-y-0 overflow-hidden">
+                                <DialogTitle className="sr-only">Search Stocks</DialogTitle>
+                                <StockSearch
+                                    onSelect={(stock) => {
+                                        handleStockAdd(stock);
+                                        setOpen(false);
+                                    }}
+                                />
+                            </DialogContent>
+                        </Dialog>
                     </div>
                     <Button
                         icon={<SquarePen className="size-4"/>}

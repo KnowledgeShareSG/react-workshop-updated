@@ -15,7 +15,6 @@ export interface WatchlistTableProps {
 }
 export const WatchlistTable = ({watchListData}: WatchlistTableProps) => {
     const { data, loading } = useWatchlistPerformance(watchListData);
-    console.log(data);
     if (loading) return <div>Loading watchlist...</div>;
     return <Table>
         <TableCaption>A list of your recent watchlist.</TableCaption>

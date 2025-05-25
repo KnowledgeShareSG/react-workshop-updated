@@ -25,7 +25,6 @@ export const useStockSearch = () => {
                 }
 
                 const data = await response.json();
-                console.log(data);
                 setResults(data.quotes || []);
             } catch (err) {
                 console.error('Error fetching stock data:', err);

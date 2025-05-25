@@ -25,7 +25,6 @@ export const useWatchlistPerformance = (stocks: Stock[]) => {
                         throw new Error(`API error: ${response.status}`);
                     }
                     const data = await response.json();
-                    console.log(data);
                     const chart = data.chart?.result?.[0];
                     const closes =
                         chart?.indicators?.quote?.[0]?.close?.filter((v: number) => v != null) || [];
