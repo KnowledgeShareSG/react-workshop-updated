@@ -4,7 +4,7 @@ import {
     CommandItem,
     CommandInput, CommandGroup
 } from "@/components/ui/command.tsx";
-import {useStockSearch} from "@/views/stock-search/useStockSearch.ts";
+import {useStockSearch} from "@/hooks/useStockSearch.ts";
 
 export interface Stock {
     exchange: string;
