@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button.tsx";
 import { SquarePen } from "lucide-react";
-import { StockSearch, type Stock } from "@/views/stock-search/StockSearch.tsx";
+import { StockSearch } from "@/views/stock-search/StockSearch.tsx";
 import {
     Table,
     TableBody,
