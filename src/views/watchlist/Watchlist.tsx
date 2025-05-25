@@ -2,13 +2,31 @@ import {Button} from "@/components/ui/button.tsx";
 import {SquarePen} from "lucide-react";
 import {StockSearch, type Stock} from "@/views/stock-search/StockSearch.tsx";
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {WatchlistTable} from "@/views/watchlist/WatchlistTable.tsx";
 import {Dialog, DialogContent, DialogTitle, DialogTrigger} from "@/components/ui/dialog.tsx";
+const WATCHLIST_KEY = "watchlist";
 
 export const Watchlist = () => {
     const [watchlist, setWatchlist] = useState<Stock[]>([]);
     const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        const stored = localStorage.getItem(WATCHLIST_KEY);
+        if (stored) {
+            try {
+                const parsed: Stock[] = JSON.parse(stored);
+                setWatchlist((prev) => [...prev, ...parsed]);
+            } catch {
+                setWatchlist([]);
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem(WATCHLIST_KEY, JSON.stringify(watchlist));
+    }, [watchlist]);
+
     const handleStockAdd = (stock: Stock) => {
         setWatchlist((prev) => {
             const alreadyExists = prev.some((s) => s.symbol === stock.symbol);
