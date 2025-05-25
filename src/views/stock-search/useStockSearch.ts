@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import type {Stock} from "@/views/stock-search/StockSearch.tsx";
-import {mockStockResults} from "@/views/stock-search/mock.ts";
 
 export const useStockSearch = () => {
     const [query, setQuery] = useState("");
@@ -12,15 +11,32 @@ export const useStockSearch = () => {
             setResults([]);
             return;
         }
-        setTimeout(async () => {
+
+        const fetchStocks = async () => {
             setLoading(true);
-            const filteredResults = mockStockResults.filter(stock =>
-                stock.name.toLowerCase().includes(query.toLowerCase()) ||
-                stock.symbol.toLowerCase().includes(query.toLowerCase())
-            );
-            setResults(filteredResults);
-            setLoading(false);
-        }, 300)
+
+            try {
+                const response = await fetch(
+                    `https://octopus-app-3grc6.ondigitalocean.app/yahoo/search?q=${encodeURIComponent(query)}`
+                );
+
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log(data);
+                setResults(data.quotes || []);
+            } catch (err) {
+                console.error('Error fetching stock data:', err);
+                setResults([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchStocks();
+
         return () => {
             setLoading(false);
         };
