@@ -1,9 +1,9 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {Button} from './button';
-import {CircleX, Trash2} from 'lucide-react';
+import {CircleX, Trash2, SquarePen} from 'lucide-react';
 
 const meta: Meta<typeof Button> = {
-    title: 'Component/Button',
+    title: 'Components/Button',
     component: Button,
     tags: ['autodocs'],
     argTypes: {
@@ -15,9 +15,6 @@ const meta: Meta<typeof Button> = {
             control: {type: "select"},
             options: ['default', 'sm', 'lg', 'icon'],
         },
-        icon: {
-            control: false,
-        },
         children: {
             control: "text",
         },
@@ -25,6 +22,13 @@ const meta: Meta<typeof Button> = {
 };
 export default meta;
 type Story = StoryObj<typeof Button>;
+
+export const Default: Story = {
+    args: {
+        variant: 'default',
+        children: 'Default',
+    },
+}
 
 export const Primary: Story = {
     args: {
@@ -36,15 +40,42 @@ export const Primary: Story = {
 export const Cancel: Story = {
     args: {
         variant: 'outline',
-        children: 'Cancel',
-        icon: <CircleX className="h-4 w-4"/>,
+        children: (
+            <>
+                <CircleX className="mr-2 h-4 w-4"/> Cancel
+            </>
+        ),
     },
 }
 
 export const Trash: Story = {
     args: {
         variant: 'default',
-        children: 'Delete',
-        icon: <Trash2 className="h-4 w-4"/>,
+        children: (
+            <>
+                <Trash2 className="mr-2 h-4 w-4"/> Delete
+            </>
+        ),
     },
 }
+
+export const WithCustomClass: Story = {
+    args: {
+        variant: 'default',
+        children: (
+            <>
+                <Trash2 className="mr-2 h-4 w-4"/> Delete
+            </>
+        ),
+        className: '...',
+    },
+}
+
+export const WithIcon = () => (
+    <Button>
+        <SquarePen className="mr-2" />
+        Edit
+    </Button>
+);
+
+export const Disabled = () => <Button disabled>Disabled</Button>;

@@ -36,12 +36,10 @@ export const Watchlist = () => {
     };
 
     return (
-        <div className="w-full px-5 mt-15">
-            <div className="flex flex-wrap justify-between items-center gap-y-4">
-                <h1 className="w-full text-center sm:w-auto sm:text-left text-2xl font-bold text-gray-800">
-                    Watchlist
-                </h1>
-                <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-end">
+        <div>
+            <h1 className="text-2xl font-bold text-gray-800 mb-6">Watchlist</h1>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+                <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-center sm:justify-end">
                     <div className="w-full sm:w-[280px]">
                         <Dialog open={open} onOpenChange={setOpen}>
                             <DialogTrigger asChild>
@@ -64,10 +62,8 @@ export const Watchlist = () => {
                             </DialogContent>
                         </Dialog>
                     </div>
-                    <Button
-                        icon={<SquarePen className="size-4"/>}
-                        className="sm:w-auto whitespace-nowrap"
-                    >
+                    <Button>
+                        <SquarePen className="size-4 mr-2" />
                         Edit
                     </Button>
                 </div>
@@ -76,5 +72,5 @@ export const Watchlist = () => {
                 <WatchlistTable watchListData={watchlist}/>
             </div>
         </div>
-    )
+    );
 }
