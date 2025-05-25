@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button.tsx";
 import { SquarePen } from "lucide-react";
 import { StockSearch, type Stock } from "@/views/stock-search/StockSearch.tsx";
@@ -12,9 +13,11 @@ import {
 } from "@/components/ui/table";
 
 export const Watchlist = () => {
+    const [watchlist, setWatchlist] = useState<Stock[]>([]);
+
     const handleStockAdd = (stock: Stock) => {
-        setWatchlist((prev) => {
-            const alreadyExists = prev.some((s) => s.symbol === stock.symbol);
+        setWatchlist((prev: Stock[]) => {
+            const alreadyExists = prev.some((s: Stock) => s.symbol === stock.symbol);
             if (alreadyExists) return prev;
             return [...prev, stock];
         });
@@ -28,7 +31,7 @@ export const Watchlist = () => {
                     <div className="w-full sm:w-[280px]">
                         <StockSearch onSelect={handleStockAdd} />
                     </div>
-                    <Button className="sm:w-auto whitespace-nowrap">
+                    <Button>
                         <SquarePen className="size-4 mr-2" />
                         Edit
                     </Button>
