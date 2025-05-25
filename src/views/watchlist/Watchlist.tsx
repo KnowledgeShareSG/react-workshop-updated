@@ -12,7 +12,8 @@ import {
 } from "@/components/ui/table"
 import {useState} from "react";
 
-export const Watchlist = () => {
+
+export const Watchlist = ({ setPage }) => {
     const [watchlist, setWatchlist] = useState<Stock[]>([]);
     console.log(watchlist);
     const handleStockAdd = (stock: Stock) => {
@@ -23,14 +24,33 @@ export const Watchlist = () => {
         });
     };
 
-    return (
-        <div className="w-full px-5 mt-15">
-            <div className="flex flex-wrap justify-between items-center gap-y-4">
-                <h1 className="w-full text-center sm:w-auto sm:text-left text-2xl font-bold text-gray-800">
-                    Watchlist
-                </h1>
+    // const sidebarItems = [ // Removed sidebarItems
+    //   {
+    //     title: "Watchlist",
+    //     url: "/watchlist",
+    //     icon: Bookmark,
+    //     isActive: true,
+    //     onClick: () => setPage("watchlist"),
+    //     items: [
+    //       { title: "My Stocks", url: "/watchlist/stocks" },
+    //     ],
+    //   },
+    //   {
+    //     title: "Trending Stocks",
+    //     url: "/trending",
+    //     icon: TrendingUp,
+    //     isActive: false,
+    //     onClick: () => setPage("trending"),
+    //     items: [{ title: "Trending", url: "/trending" }],
+    //   },
+    // ];
 
-                <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-end">
+    return (
+        <div>
+            {/* Only Watchlist content here, no sidebar */}
+            <h1 className="text-2xl font-bold text-gray-800 mb-6">Watchlist</h1>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+                <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-center sm:justify-end">
                     <div className="w-full sm:w-[280px]">
                         <StockSearch onSelect={handleStockAdd} />
                     </div>
@@ -42,7 +62,7 @@ export const Watchlist = () => {
                     </Button>
                 </div>
             </div>
-            <div className="mt-5 bg-white px-0 py-6 overflow-x-auto">
+            <div className="bg-white px-0 py-6 overflow-x-auto flex-1">
                 <Table>
                     <TableCaption>A list of your recent invoices.</TableCaption>
                     <TableHeader>
@@ -54,7 +74,6 @@ export const Watchlist = () => {
                             <TableHead className="text-left hidden xl:table-cell">Amount</TableHead>
                         </TableRow>
                     </TableHeader>
-
                     <TableBody>
                         <TableRow className="h-24 xl:h-12">
                             <TableCell className="text-left xl:table-cell">INV001</TableCell>
