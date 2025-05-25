@@ -5,6 +5,7 @@ export interface WatchListStock extends Stock {
     closedPrice: number[];
     changeInPercent: number;
     currentPrice: number | null;
+    timestampList: number[];
 }
 
 export const useWatchlistPerformance = (stocks: Stock[]) => {
@@ -17,11 +18,6 @@ export const useWatchlistPerformance = (stocks: Stock[]) => {
         async function load() {
             const fetchPerformanceData: WatchListStock[] = await Promise.all(
                 stocks.map(async (stock) => {
-                    // try {
-                    //
-                    // } catch () {
-                    //     console.error('Error fetching stock data:', err);
-                    // }
                     const response = await fetch(
                         `https://octopus-app-3grc6.ondigitalocean.app/yahoo/chart/${stock.symbol}`
                     );
@@ -34,6 +30,7 @@ export const useWatchlistPerformance = (stocks: Stock[]) => {
                     const closes =
                         chart?.indicators?.quote?.[0]?.close?.filter((v: number) => v != null) || [];
                     const currentPrice = closes.at(-1) ?? null;
+                    const timestamps = chart?.timestamp || [];
 
                     const changePercent =
                         closes.length >= 2
@@ -44,7 +41,8 @@ export const useWatchlistPerformance = (stocks: Stock[]) => {
                         ...stock,
                         closedPrice: closes,
                         changeInPercent: changePercent,
-                        currentPrice: currentPrice
+                        currentPrice: currentPrice,
+                        timestampList: timestamps
                     }
                 }));
             setData(fetchPerformanceData);
