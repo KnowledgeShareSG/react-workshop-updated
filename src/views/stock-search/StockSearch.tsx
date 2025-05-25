@@ -24,8 +24,13 @@ export interface Stock {
     isYahooFinance: boolean;
 }
 
-export const StockSearch = () => {
+export interface StockSearchProps {
+    onSelect: (stock: Stock) => void;
+}
+
+export const StockSearch = ({ onSelect }: StockSearchProps) =>  {
     const {results, query, setQuery, loading} = useStockSearch();
+
     console.log(results);
     return (
         <div>
@@ -45,7 +50,7 @@ export const StockSearch = () => {
                     <CommandList className="absolute left-0 right-0 z-10 bg-white border border-zinc-200 mt-11 rounded-md shadow-md max-h-60 overflow-y-auto">
                         {results.map((stock) => (
                             <CommandGroup key={stock.symbol}>
-                                <CommandItem>
+                                <CommandItem onSelect={() => onSelect(stock)} className="cursor-pointer">
                                     {stock.longname}
                                 </CommandItem>
                             </CommandGroup>

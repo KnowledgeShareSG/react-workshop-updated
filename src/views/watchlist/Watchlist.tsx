@@ -1,6 +1,6 @@
 import {Button} from "@/components/ui/button.tsx";
 import {SquarePen} from "lucide-react";
-import {StockSearch} from "@/views/stock-search/StockSearch.tsx";
+import {StockSearch, type Stock} from "@/views/stock-search/StockSearch.tsx";
 import {
     Table,
     TableBody,
@@ -10,8 +10,19 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import {useState} from "react";
 
 export const Watchlist = () => {
+    const [watchlist, setWatchlist] = useState<Stock[]>([]);
+    console.log(watchlist);
+    const handleStockAdd = (stock: Stock) => {
+        setWatchlist((prev) => {
+            const alreadyExists = prev.some((s) => s.symbol === stock.symbol);
+            if (alreadyExists) return prev;
+            return [...prev, stock];
+        });
+    };
+
     return (
         <div className="w-full px-5 mt-15">
             <div className="flex flex-wrap justify-between items-center gap-y-4">
@@ -21,7 +32,7 @@ export const Watchlist = () => {
 
                 <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-end">
                     <div className="w-full sm:w-[280px]">
-                        <StockSearch />
+                        <StockSearch onSelect={handleStockAdd} />
                     </div>
                     <Button
                         icon={<SquarePen className="size-4" />}
