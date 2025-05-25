@@ -1,6 +1,6 @@
-import {Button} from "@/components/ui/button.tsx";
-import {SquarePen} from "lucide-react";
-import {StockSearch, type Stock} from "@/views/stock-search/StockSearch.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { SquarePen } from "lucide-react";
+import { StockSearch, type Stock } from "@/views/stock-search/StockSearch.tsx";
 import {
     Table,
     TableBody,
@@ -9,13 +9,11 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table"
-import {useState} from "react";
+} from "@/components/ui/table";
+import { useState } from "react";
 
-
-export const Watchlist = ({ setPage }) => {
+export const Watchlist = () => {
     const [watchlist, setWatchlist] = useState<Stock[]>([]);
-    console.log(watchlist);
     const handleStockAdd = (stock: Stock) => {
         setWatchlist((prev) => {
             const alreadyExists = prev.some((s) => s.symbol === stock.symbol);
@@ -24,40 +22,16 @@ export const Watchlist = ({ setPage }) => {
         });
     };
 
-    // const sidebarItems = [ // Removed sidebarItems
-    //   {
-    //     title: "Watchlist",
-    //     url: "/watchlist",
-    //     icon: Bookmark,
-    //     isActive: true,
-    //     onClick: () => setPage("watchlist"),
-    //     items: [
-    //       { title: "My Stocks", url: "/watchlist/stocks" },
-    //     ],
-    //   },
-    //   {
-    //     title: "Trending Stocks",
-    //     url: "/trending",
-    //     icon: TrendingUp,
-    //     isActive: false,
-    //     onClick: () => setPage("trending"),
-    //     items: [{ title: "Trending", url: "/trending" }],
-    //   },
-    // ];
-
     return (
         <div>
-            {/* Only Watchlist content here, no sidebar */}
             <h1 className="text-2xl font-bold text-gray-800 mb-6">Watchlist</h1>
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
                 <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-center sm:justify-end">
                     <div className="w-full sm:w-[280px]">
                         <StockSearch onSelect={handleStockAdd} />
                     </div>
-                    <Button
-                        icon={<SquarePen className="size-4" />}
-                        className="sm:w-auto whitespace-nowrap"
-                    >
+                    <Button className="sm:w-auto whitespace-nowrap">
+                        <SquarePen className="size-4 mr-2" />
                         Edit
                     </Button>
                 </div>
@@ -93,5 +67,5 @@ export const Watchlist = ({ setPage }) => {
                 </Table>
             </div>
         </div>
-    )
+    );
 }
