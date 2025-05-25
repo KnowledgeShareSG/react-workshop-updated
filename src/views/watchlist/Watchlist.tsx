@@ -10,10 +10,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
 
 export const Watchlist = () => {
-    const [watchlist, setWatchlist] = useState<Stock[]>([]);
     const handleStockAdd = (stock: Stock) => {
         setWatchlist((prev) => {
             const alreadyExists = prev.some((s) => s.symbol === stock.symbol);
