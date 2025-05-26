@@ -30,7 +30,7 @@ function App() {
         <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-gray-800 via-gray-900 to-black z-50">
             <div className="relative w-full max-w-5xl h-[90vh] bg-white rounded-2xl shadow-2xl flex overflow-hidden border border-gray-200">
                 <SidebarProvider>
-                    <aside className="w-64 border-r bg-white flex-shrink-0 h-full">
+                    <aside className="w-20 border-r bg-white flex-shrink-0 h-full flex flex-col items-center py-6">
                         <NavMain items={sidebarItems} />
                     </aside>
                     <main className="flex-1 px-5 py-8 flex flex-col overflow-y-auto h-full">

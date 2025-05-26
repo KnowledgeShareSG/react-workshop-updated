@@ -9,13 +9,8 @@ import {
 } from "@/components/ui/collapsible"
 import {
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 
 export function NavMain({
@@ -27,53 +22,22 @@ export function NavMain({
     icon?: LucideIcon
     isActive?: boolean
     onClick?: () => void
-    items?: {
-      title: string
-      url: string
-    }[]
   }[]
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Trade App</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
-          <Collapsible
+          <SidebarMenuItem
             key={item.title}
-            asChild
-            defaultOpen={item.isActive}
-            className="group/collapsible"
+            onClick={item.onClick}
+            className={`flex items-center justify-center my-2 p-2 rounded-lg hover:bg-gray-100 transition ${
+              item.isActive ? "bg-gray-200" : ""
+            }`}
+            title={item.title} // Tooltip on hover
           >
-            <SidebarMenuItem
-              key={item.title}
-              onClick={item.onClick}
-              className={item.isActive ? "active-class" : ""}
-            >
-              <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
-                  {item.items && item.items.length > 0 && (
-                    // Only show chevron if there are sub-items
-                    <ChevronDown className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                  )}
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  {item.items?.map((subItem) => (
-                    <SidebarMenuSubItem key={subItem.title}>
-                      <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
-                          <span>{subItem.title}</span>
-                        </a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  ))}
-                </SidebarMenuSub>
-              </CollapsibleContent>
-            </SidebarMenuItem>
-          </Collapsible>
+            {item.icon && <item.icon className="w-6 h-6" />}
+          </SidebarMenuItem>
         ))}
       </SidebarMenu>
     </SidebarGroup>
