@@ -1,42 +1,32 @@
-import {useEffect, useState} from "react";
+import { useState} from "react";
 import type {Stock} from "@/views/stock-search/StockSearch.tsx";
+import { useQuery } from "@tanstack/react-query";
+
+
+async function fetchSearchResults(query): Promise<Stock> {
+    try {
+        const response = await fetch(
+            `https://octopus-app-3grc6.ondigitalocean.app/yahoo/search?q=${encodeURIComponent(query)}`
+        );
+        const data = await response.json();
+        return data.quotes || [];
+    } catch (err) {
+        throw error('Error fetching stock data:', err);
+    }
+};
 
 export const useStockSearch = () => {
     const [query, setQuery] = useState("");
-    const [results, setResults] = useState<Stock[]>([]);
-    const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        if(!query.trim()) {
-            setResults([]);
-            return;
-        }
-        const fetchStocks = async () => {
-            setLoading(true);
-            try {
-                const response = await fetch(
-                    `https://octopus-app-3grc6.ondigitalocean.app/yahoo/search?q=${encodeURIComponent(query)}`
-                );
-                const data = await response.json();
-                setResults(data.quotes || []);
-            } catch (err) {
-                console.error('Error fetching stock data:', err);
-                setResults([]);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchStocks();
-
-        return () => {
-            setLoading(false);
-        };
-    }, [query]);
+    const { data, isLoading } = useQuery<Stock>({
+        queryKey: [query],
+        queryFn: () => fetchSearchResults(query)
+    })
 
     return {
         query,
         setQuery,
-        results,
-        loading
+        results: data,
+        loading: isLoading,
     }
 }
