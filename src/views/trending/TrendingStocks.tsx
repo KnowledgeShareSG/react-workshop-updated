@@ -18,7 +18,6 @@ export const TrendingStocks = () => {
       });
   }, []);
 
-  // Fetch details when selectedStock changes
   useEffect(() => {
     if (selectedStock) {
       setDetailsLoading(true);

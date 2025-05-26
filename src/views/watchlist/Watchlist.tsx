@@ -1,10 +1,10 @@
-import {Button} from "@/components/ui/button.tsx";
-import {SquarePen} from "lucide-react";
-import {StockSearch, type Stock} from "@/views/stock-search/StockSearch.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { SquarePen } from "lucide-react";
+import { StockSearch, type Stock } from "@/views/stock-search/StockSearch.tsx";
+import { useEffect, useState } from "react";
+import { WatchlistTable } from "@/views/watchlist/WatchlistTable.tsx";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog.tsx";
 
-import {useEffect, useState} from "react";
-import {WatchlistTable} from "@/views/watchlist/WatchlistTable.tsx";
-import {Dialog, DialogContent, DialogTitle, DialogTrigger} from "@/components/ui/dialog.tsx";
 const WATCHLIST_KEY = "watchlist";
 
 export const Watchlist = () => {
@@ -16,7 +16,7 @@ export const Watchlist = () => {
         if (stored) {
             try {
                 const parsed: Stock[] = JSON.parse(stored);
-                setWatchlist((prev) => [...prev, ...parsed]);
+                setWatchlist(parsed);
             } catch {
                 setWatchlist([]);
             }
@@ -50,7 +50,6 @@ export const Watchlist = () => {
                                     Search stocks...
                                 </Button>
                             </DialogTrigger>
-
                             <DialogContent className="p-0 max-w-md w-full sm:w-[500px] top-34 translate-y-0 overflow-hidden">
                                 <DialogTitle className="sr-only">Search Stocks</DialogTitle>
                                 <StockSearch
@@ -69,8 +68,8 @@ export const Watchlist = () => {
                 </div>
             </div>
             <div className="mt-5 bg-white px-0 py-6 overflow-x-auto">
-                <WatchlistTable watchListData={watchlist}/>
+                <WatchlistTable watchListData={watchlist} />
             </div>
         </div>
     );
-}
+};
