@@ -11,6 +11,8 @@ export const Watchlist = () => {
     const [watchlist, setWatchlist] = useState<Stock[]>([]);
     const [open, setOpen] = useState(false);
 
+    useEffect(() => { console.log('watchlist', watchlist) }, [watchlist]);
+
     useEffect(() => {
         const stored = localStorage.getItem(WATCHLIST_KEY);
         if (stored) {
