@@ -10,13 +10,14 @@ import {
 import type { Stock } from '@/views/stock-search/StockSearch.tsx';
 import { useWatchlistPerformance } from '@/hooks/useWatchlistPerformance.ts';
 import { clsx } from 'clsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
 export interface WatchlistTableProps {
   watchListData: Stock[];
 }
 export const WatchlistTable = ({ watchListData }: WatchlistTableProps) => {
   const navigate = useNavigate();
+
   const { data, loading } = useWatchlistPerformance(watchListData);
   if (loading) return <div>Loading watchlist...</div>;
   return (
@@ -39,7 +40,12 @@ export const WatchlistTable = ({ watchListData }: WatchlistTableProps) => {
           data.map((data) => (
             <TableRow
               className="h-24 xl:h-12"
-              onClick={() => navigate(`/details/${data.symbol}`)}
+              onClick={() =>
+                navigate({
+                  to: '/details/$symbol',
+                  params: { symbol: data.symbol },
+                })
+              }
             >
               <TableCell className="text-left xl:table-cell">
                 {data.shortname}

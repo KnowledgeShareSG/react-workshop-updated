@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 import { MarketChart } from '@/components/chart/chart.tsx';
 import { ErrorBoundary } from '@/components/shared/ErrorBoundary.tsx';
 import { InfoItem } from '@/components/shared/InfoItem.tsx';
-import { useParams } from 'react-router-dom';
+import { useParams } from '@tanstack/react-router';
 
 interface DetailsViewProps {
   symbol: string;
@@ -80,7 +80,7 @@ export const DetailsView = ({ symbol }: DetailsViewProps) => {
 };
 
 export const DetailsWithErrorBoundary = () => {
-  const { symbol } = useParams();
+  const { symbol } = useParams({ from: '/details/$symbol' });
   return (
     <ErrorBoundary>
       <Suspense fallback={<Spinner />}>
