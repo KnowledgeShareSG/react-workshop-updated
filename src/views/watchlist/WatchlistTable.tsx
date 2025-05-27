@@ -20,7 +20,7 @@ export interface WatchlistTableProps {
 }
 
 export const WatchlistTable = ({
-  watchListData,
+  watchListData = [],
   editMode = false,
   selected = [],
   onSelect,

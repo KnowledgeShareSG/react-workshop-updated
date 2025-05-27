@@ -4,32 +4,35 @@ import { StockSearch, type Stock } from "@/views/stock-search/StockSearch.tsx";
 import { useEffect, useState } from "react";
 import { WatchlistTable } from "@/views/watchlist/WatchlistTable.tsx";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog.tsx";
+import { useWatchlist } from "./WatchlistContext";
 const WATCHLIST_KEY = "watchlist";
 
 export const Watchlist = () => {
-    const [watchlist, setWatchlist] = useState<Stock[]>([]);
+    //const [watchlist, setWatchlistContext] = useState<Stock[]>([]);
     const [open, setOpen] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [selected, setSelected] = useState<string[]>([]);
+    const { watchlistContext, setWatchlistContext } = useWatchlist();
+
 
     useEffect(() => {
         const stored = localStorage.getItem(WATCHLIST_KEY);
         if (stored) {
             try {
                 const parsed: Stock[] = JSON.parse(stored);
-                setWatchlist(parsed);
+                setWatchlistContext(parsed);
             } catch {
-                setWatchlist([]);
+                setWatchlistContext([]);
             }
         }
     }, []);
 
     useEffect(() => {
-        localStorage.setItem(WATCHLIST_KEY, JSON.stringify(watchlist));
-    }, [watchlist]);
+        localStorage.setItem(WATCHLIST_KEY, JSON.stringify(watchlistContext));
+    }, [watchlistContext]);
 
     const handleStockAdd = (stock: Stock) => {
-        setWatchlist((prev) => {
+        setWatchlistContext((prev) => {
             const alreadyExists = prev.some((s) => s.symbol === stock.symbol);
             if (alreadyExists) return prev;
             return [...prev, stock];
@@ -45,7 +48,7 @@ export const Watchlist = () => {
     };
 
     const handleDelete = () => {
-        setWatchlist((prev) => prev.filter((s) => !selected.includes(s.symbol)));
+        setWatchlistContext((prev) => prev.filter((s) => !selected.includes(s.symbol)));
         setSelected([]);
         setEditMode(false);
     };
@@ -87,8 +90,8 @@ export const Watchlist = () => {
                         <Button
                             className="flex items-center whitespace-nowrap"
                             onClick={() => setEditMode(true)}
+                            icon={<SquarePen className="size-4 mr-2"/>}
                         >
-                            <SquarePen className="size-4 mr-2" />
                             Edit
                         </Button>
                     ) : (
@@ -97,8 +100,9 @@ export const Watchlist = () => {
                                 variant="outline"
                                 className="flex items-center whitespace-nowrap"
                                 onClick={handleCancel}
+                                icon={<X className="size-4 mr-2" />}
                             >
-                                <X className="size-4 mr-2" />
+                                
                                 Cancel
                             </Button>
                             <Button
@@ -106,8 +110,9 @@ export const Watchlist = () => {
                                 className="flex items-center whitespace-nowrap"
                                 onClick={handleDelete}
                                 disabled={selected.length === 0}
+                                icon={<Trash2 className="size-4 mr-2" />}
                             >
-                                <Trash2 className="size-4 mr-2" />
+                                
                                 Delete
                             </Button>
                         </>
@@ -116,7 +121,7 @@ export const Watchlist = () => {
             </div>
             <div className="mt-5 bg-white px-0 py-6 overflow-x-auto">
                 <WatchlistTable
-                    watchListData={watchlist}
+                    watchListData={watchlistContext || []}
                     editMode={editMode}
                     selected={selected}
                     onSelect={handleSelect}
