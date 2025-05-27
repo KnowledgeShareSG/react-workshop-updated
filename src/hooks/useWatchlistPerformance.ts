@@ -24,9 +24,9 @@ async function loadStocks(stocks: Array<Stock>): Promise<Array<WatchListStock>> 
       const closes =
         chart?.indicators?.quote?.[0]?.close?.filter(
           (v: number) => v != null,
-        ) || [];
+        ) ?? [];
       const currentPrice = closes.at(-1) ?? null;
-      const timestamps = chart?.timestamp || [];
+      const timestamps = chart?.timestamp ?? [];
 
       const changePercent =
         closes.length >= 2
@@ -58,5 +58,5 @@ export const useWatchlistPerformance = (stocks: Stock[]) => {
     queryKey: ['listPerformance', ...stockSymbols],
   });
 
-  return { data: data || [], loading };
+  return { data: data ?? [], loading };
 };
