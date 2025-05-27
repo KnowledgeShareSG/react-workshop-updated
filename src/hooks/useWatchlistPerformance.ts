@@ -1,3 +1,4 @@
+import { useInstrumentDetails } from "@/views/instrument-details/useInstrumentDetails";
 import type {Stock} from "@/views/stock-search/StockSearch.tsx";
 import { useQuery } from "@tanstack/react-query";
 import {useMemo} from "react";
