@@ -50,11 +50,9 @@ const fetchInstrumentDetails = async (symbol: string): Promise<ChartResult> => {
   return data.chart?.result[0];
 };
 
-export const useInstrumentDetails = (symbol: string) => {
+export function useInstrumentDetails(symbol: string) {
   return useQuery<ChartResult>({
     queryKey: ['instrumentDetails', symbol],
     queryFn: () => fetchInstrumentDetails(symbol),
-    // @ts-expect-error using react suspense
-    suspense: true,
   });
 };

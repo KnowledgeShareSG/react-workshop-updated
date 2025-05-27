@@ -7,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table.tsx';
+import { MarketChartSmall } from '@/components/chart/chart';
 import type { Stock } from '@/views/stock-search/StockSearch.tsx';
 import { useWatchlistPerformance } from '@/hooks/useWatchlistPerformance.ts';
 import { useToggleList } from '@/hooks/useToggleList';
@@ -58,7 +59,7 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
                   type="checkbox"
                   className="form-checkbox"
                   onChange={() => {
-                    toggleAll()
+                    toggleAll();
                   }}
                 />
               </div>
@@ -78,10 +79,7 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
       <TableBody>
         {data &&
           data.map((data) => (
-            <TableRow
-              className="h-24 xl:h-12 cursor-pointer"
-              key={data.symbol}
-            >
+            <TableRow className="h-24 xl:h-12" key={data.symbol}>
               <TableCell
                 className={clsx('w-[40px] p-0', !editMode && 'hidden')}
               >
@@ -91,12 +89,18 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
                       checked={listOfSymbolToggles[data.symbol]}
                       type="checkbox"
                       className="form-checkbox"
-                      onChange={() => {toggleOne(data.symbol, !listOfSymbolToggles[data.symbol])}}
+                      onChange={() => {
+                        toggleOne(
+                          data.symbol,
+                          !listOfSymbolToggles[data.symbol],
+                        );
+                      }}
                     />
                   </div>
                 )}
               </TableCell>
-              <TableCell className="text-left xl:table-cell" 
+              <TableCell
+                className="text-left xl:table-cell cursor-pointer"
                 onClick={() =>
                   navigate({
                     to: '/details/$symbol',
@@ -106,25 +110,32 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
               >
                 {data.shortname}
               </TableCell>
-              <TableCell className="text-left xl:table-cell" >
+              <TableCell className="text-left xl:table-cell">
                 {data.exchange}
               </TableCell>
               <TableCell className="text-left hidden xl:table-cell">
-                {data.quoteType.toLowerCase()}
+                {data.quoteType}
               </TableCell>
               <TableCell className="text-left xl:table-cell">
                 ${data.currentPrice?.toFixed(2)}
               </TableCell>
               <TableCell
                 className={clsx(
-                  'text-left xl:table-cell',
+                  'text-left xl:table-cell ',
                   data.changeInPercent >= 0 ? 'text-green-600' : 'text-red-600',
                 )}
               >
-                {data.changeInPercent}%
+                {`${data.changeInPercent >= 0 ? '+' : ''}${data.changeInPercent}%`}
               </TableCell>
-              <TableCell className="text-left hidden xl:table-cell">
-                {data.index}
+              <TableCell className="text-left hidden xl:table-cell max-w-4">
+                <MarketChartSmall
+                  symbol={data.symbol}
+                  color={
+                    data.changeInPercent >= 0
+                      ? 'green'
+                      : 'red'
+                  }
+                />
               </TableCell>
             </TableRow>
           ))}
