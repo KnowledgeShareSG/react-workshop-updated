@@ -1,15 +1,17 @@
 import {Button} from "@/components/ui/button.tsx";
-import {SquarePen} from "lucide-react";
+import {CircleX, SquarePen, Trash2} from "lucide-react";
 import {StockSearch, type Stock} from "@/views/stock-search/StockSearch.tsx";
 
 import {useEffect, useState} from "react";
 import {WatchlistTable} from "@/views/watchlist/WatchlistTable.tsx";
 import {Dialog, DialogContent, DialogTitle, DialogTrigger} from "@/components/ui/dialog.tsx";
+
 const WATCHLIST_KEY = "watchlist";
 
 export const Watchlist = () => {
     const [watchlist, setWatchlist] = useState<Stock[]>([]);
     const [open, setOpen] = useState(false);
+    const [editMode, setEditMode] = useState(false);
 
     useEffect(() => { console.log('watchlist', watchlist) }, [watchlist]);
 
@@ -44,38 +46,63 @@ export const Watchlist = () => {
                     Watchlist
                 </h1>
                 <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-end">
-                    <div className="w-full sm:w-[280px]">
-                        <Dialog open={open} onOpenChange={setOpen}>
-                            <DialogTrigger asChild>
-                                <Button
-                                    variant="outline"
-                                    className="w-full justify-start text-muted-foreground"
-                                >
-                                    Search stocks...
-                                </Button>
-                            </DialogTrigger>
+                    {!editMode && (
+                        <div className="w-full sm:w-[280px]">
+                            <Dialog open={open} onOpenChange={setOpen}>
+                                <DialogTrigger asChild>
+                                    <Button
+                                        variant="outline"
+                                        className="w-full justify-start text-muted-foreground"
+                                    >
+                                        Search stocks...
+                                    </Button>
+                                </DialogTrigger>
 
-                            <DialogContent className="p-0 max-w-md w-full sm:w-[500px] top-34 translate-y-0 overflow-hidden">
-                                <DialogTitle className="sr-only">Search Stocks</DialogTitle>
-                                <StockSearch
-                                    onSelect={(stock) => {
-                                        handleStockAdd(stock);
-                                        setOpen(false);
-                                    }}
-                                />
-                            </DialogContent>
-                        </Dialog>
-                    </div>
-                    <Button
+                                <DialogContent className="p-0 max-w-md w-full sm:w-[500px] top-34 translate-y-0 overflow-hidden">
+                                    <DialogTitle className="sr-only">Search Stocks</DialogTitle>
+                                    <StockSearch
+                                        onSelect={(stock) => {
+                                            handleStockAdd(stock);
+                                            setOpen(false);
+                                        }}
+                                    />
+                                </DialogContent>
+                            </Dialog>
+                        </div>
+                    )}
+                    {editMode && (
+                        <>
+                            <Button
+                                onClick={() => {setEditMode(false);}}
+                                icon={<CircleX />}
+                                variant="secondary"
+                                className="sm:w-auto whitespace-nowrap"
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                onClick={() => {setEditMode(false);}}
+                                icon={<Trash2 />}
+                                className="sm:w-auto whitespace-nowrap"
+                            >
+                                Delete
+                            </Button>
+                        </>
+
+                    )}
+
+                    {!editMode && (
+                        <Button
+                        onClick={() => {setEditMode(prevState => !prevState);}}
                         icon={<SquarePen className="size-4"/>}
                         className="sm:w-auto whitespace-nowrap"
                     >
                         Edit
-                    </Button>
+                    </Button>)}
                 </div>
             </div>
             <div className="mt-5 bg-white px-0 py-6 overflow-x-auto">
-                <WatchlistTable watchListData={watchlist}/>
+                <WatchlistTable watchListData={watchlist} editMode={editMode}/>
             </div>
         </div>
     )
