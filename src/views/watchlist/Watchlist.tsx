@@ -17,7 +17,7 @@ export const Watchlist = () => {
         if (stored) {
             try {
                 const parsed: Stock[] = JSON.parse(stored);
-                setWatchlist((prev) => [...prev, ...parsed]);
+                setWatchlist(parsed);
             } catch {
                 setWatchlist([]);
             }
@@ -61,7 +61,7 @@ export const Watchlist = () => {
                 <h1 className="w-full text-center sm:w-auto sm:text-left text-2xl font-bold text-gray-800">
                     Watchlist
                 </h1>
-                <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-end">
+                <div className="flex flex-row items-center gap-3 sm:w-auto justify-center sm:justify-end">
                     <div className="w-full sm:w-[280px]">
                         <Dialog open={open} onOpenChange={setOpen}>
                             <DialogTrigger asChild>
@@ -85,7 +85,7 @@ export const Watchlist = () => {
                     </div>
                     {!editMode ? (
                         <Button
-                            className="sm:w-auto whitespace-nowrap"
+                            className="flex items-center whitespace-nowrap"
                             onClick={() => setEditMode(true)}
                         >
                             <SquarePen className="size-4 mr-2" />
@@ -95,7 +95,7 @@ export const Watchlist = () => {
                         <>
                             <Button
                                 variant="outline"
-                                className="sm:w-auto whitespace-nowrap"
+                                className="flex items-center whitespace-nowrap"
                                 onClick={handleCancel}
                             >
                                 <X className="size-4 mr-2" />
@@ -103,7 +103,7 @@ export const Watchlist = () => {
                             </Button>
                             <Button
                                 variant="destructive"
-                                className="sm:w-auto whitespace-nowrap"
+                                className="flex items-center whitespace-nowrap"
                                 onClick={handleDelete}
                                 disabled={selected.length === 0}
                             >
