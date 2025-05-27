@@ -95,7 +95,7 @@ export const Watchlist = () => {
                         <Button
                         onClick={() => {setEditMode(prevState => !prevState);}}
                         icon={<SquarePen className="size-4"/>}
-                        className="sm:w-auto whitespace-nowrap"
+                        className="sm:w-auto whitespace-nowrap cursor-pointer"
                     >
                         Edit
                     </Button>)}

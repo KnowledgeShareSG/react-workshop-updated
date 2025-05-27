@@ -53,7 +53,7 @@ export const WatchlistTable = ( props : WatchlistTableProps) => {
         {data &&
           data.map((data) => (
             <TableRow
-              className="h-24 xl:h-12"
+              className="h-24 xl:h-12 cursor-pointer"
               onClick={() =>
                 navigate({
                   to: '/details/$symbol',
