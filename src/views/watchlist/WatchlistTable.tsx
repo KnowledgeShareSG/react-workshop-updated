@@ -9,10 +9,8 @@ import {
 } from '@/components/ui/table.tsx';
 import type { Stock } from '@/views/stock-search/StockSearch.tsx';
 import { useWatchlistPerformance } from '@/hooks/useWatchlistPerformance.ts';
-import { useToggleList } from '@/hooks/useToggleList';
 import { clsx } from 'clsx';
 import { useNavigate } from '@tanstack/react-router';
-import { useMemo, useEffect } from 'react';
 
 export interface WatchlistTableProps {
   watchListData: Stock[];
@@ -30,15 +28,22 @@ export const WatchlistTable = ({
   const navigate = useNavigate();
   const { data, loading } = useWatchlistPerformance(watchListData);
 
-  const symbols = useMemo(() => watchListData.map((item) => item.symbol) , [watchListData]);
-
-  const { allSelected, listOfSymbolToggles, toggleAll, toggleOne, updateSymbols } =
-    useToggleList(symbols);
-
-  useEffect(() => {
-    updateSymbols(symbols);
-    // eslint-disable-next-line react-hooks/exhaustive-deps 
-  }, [symbols]);
+  // "Select all" logic
+  const allSelected = data && data.length > 0 && data.every(row => selected?.includes(row.symbol));
+  const toggleAll = () => {
+    if (!data) return;
+    if (allSelected) {
+      // Unselect all
+      data.forEach(row => {
+        if (selected.includes(row.symbol)) onSelect?.(row.symbol);
+      });
+    } else {
+      // Select all
+      data.forEach(row => {
+        if (!selected.includes(row.symbol)) onSelect?.(row.symbol);
+      });
+    }
+  };
 
   if (loading) return <div>Loading watchlist...</div>;
 
@@ -49,14 +54,14 @@ export const WatchlistTable = ({
         <TableRow className="h-24 xl:h-12">
           <TableHead className={clsx("w-[40px] p-0", !editMode && "hidden")}>
             {editMode && (
-                <div className="flex items-center justify-center h-full">
-                  <input
+              <div className="flex items-center justify-center h-full">
+                <input
                   checked={allSelected}
-                      type="checkbox"
-                      className="form-checkbox"
-                      onChange={() => {toggleAll()}}
-                  />
-                </div>
+                  type="checkbox"
+                  className="form-checkbox"
+                  onChange={toggleAll}
+                />
+              </div>
             )}
           </TableHead>
           <TableHead className="text-left xl:table-cell">Name</TableHead>
@@ -94,7 +99,7 @@ export const WatchlistTable = ({
                     type="checkbox"
                     checked={selected?.includes(row.symbol)}
                     onChange={() => onSelect?.(row.symbol)}
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={e => e.stopPropagation()}
                   />
                 </TableCell>
               )}
