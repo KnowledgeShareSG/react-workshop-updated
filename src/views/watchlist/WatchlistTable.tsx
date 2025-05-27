@@ -27,7 +27,7 @@ export const WatchlistTable = ( props : WatchlistTableProps) => {
     <Table>
       <TableCaption>A list of your recent watchlist.</TableCaption>
       <TableHeader>
-        <TableRow className="h-24 xl:h-12">
+        <TableRow className="h-24 xl:h-12 cursor-pointer">
           <TableHead className={clsx("w-[40px] p-0", !editMode && "hidden")}>
             {editMode && (
                 <div className="flex items-center justify-center h-full">
