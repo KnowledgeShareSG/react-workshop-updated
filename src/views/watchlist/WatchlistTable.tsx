@@ -65,7 +65,8 @@ export const WatchlistTable = ({
             )}
           </TableHead>
           <TableHead className="text-left xl:table-cell">Name</TableHead>
-          <TableHead className="text-left hidden xl:table-cell">Type</TableHead>
+          <TableHead className="text-left xl:table-cell">Exchange</TableHead>
+          <TableHead className="text-left xl:table-cell">Type</TableHead>
           <TableHead className="text-left xl:table-cell">Price</TableHead>
           <TableHead className="text-left xl:table-cell">Change(%)</TableHead>
           <TableHead className="text-left hidden xl:table-cell">
@@ -105,6 +106,12 @@ export const WatchlistTable = ({
               )}
               <TableCell className="text-left xl:table-cell">
                 {row.shortname}
+              </TableCell>
+              <TableCell className="text-left xl:table-cell" >
+                {data.exchange}
+              </TableCell>
+              <TableCell className="text-left xl:table-cell" >
+                {row.exchange}
               </TableCell>
               <TableCell className="text-left hidden xl:table-cell">
                 {row.quoteType?.toLowerCase?.()}

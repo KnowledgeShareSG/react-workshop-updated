@@ -27,6 +27,7 @@ export const Watchlist = () => {
         }
     }, []);
 
+    // update stocks from local storage
     useEffect(() => {
         localStorage.setItem(WATCHLIST_KEY, JSON.stringify(watchlistContext));
     }, [watchlistContext]);
