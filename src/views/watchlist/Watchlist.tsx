@@ -2,7 +2,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {CircleX, SquarePen, Trash2} from "lucide-react";
 import {StockSearch, type Stock} from "@/views/stock-search/StockSearch.tsx";
 
-import {useEffect, useState} from "react";
+import { useCallback, useEffect, useState } from "react";
 import {WatchlistTable} from "@/views/watchlist/WatchlistTable.tsx";
 import {Dialog, DialogContent, DialogTitle, DialogTrigger} from "@/components/ui/dialog.tsx";
 
@@ -13,8 +13,19 @@ export const Watchlist = () => {
     const [open, setOpen] = useState(false);
     const [editMode, setEditMode] = useState(false);
 
-    useEffect(() => { console.log('watchlist', watchlist) }, [watchlist]);
+    const [selectedSymbols, setSelectedSymbols] = useState<Array<string>>([]);
 
+    const deleteHandler = useCallback(() => {
+      const newList = watchlist.filter(stock => {
+        // remove any symbols that are selected
+        return !(selectedSymbols.includes(stock.symbol))
+      })
+
+      setWatchlist(newList);
+      setEditMode(false);
+    }, [watchlist, selectedSymbols]);
+
+    //  load stocks from local storage
     useEffect(() => {
         const stored = localStorage.getItem(WATCHLIST_KEY);
         if (stored) {
@@ -27,6 +38,7 @@ export const Watchlist = () => {
         }
     }, []);
 
+    // update stocks from local storage
     useEffect(() => {
         localStorage.setItem(WATCHLIST_KEY, JSON.stringify(watchlist));
     }, [watchlist]);
@@ -81,7 +93,7 @@ export const Watchlist = () => {
                                 Cancel
                             </Button>
                             <Button
-                                onClick={() => {setEditMode(false);}}
+                                onClick={() => {deleteHandler()}}
                                 icon={<Trash2 />}
                                 className="sm:w-auto whitespace-nowrap"
                             >
@@ -102,7 +114,11 @@ export const Watchlist = () => {
                 </div>
             </div>
             <div className="mt-5 bg-white px-0 py-6 overflow-x-auto">
-                <WatchlistTable watchListData={watchlist} editMode={editMode}/>
+                <WatchlistTable
+                  watchListData={watchlist}
+                  editMode={editMode}
+                  setSelectedSymbols={setSelectedSymbols}
+                />
             </div>
         </div>
     )

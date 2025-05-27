@@ -16,12 +16,13 @@ import { useMemo, useEffect } from 'react';
 
 export interface WatchlistTableProps {
   watchListData: Stock[];
+  setSelectedSymbols: (stocks: Array<string>) => void;
   editMode: boolean;
 }
 
 export const WatchlistTable = (props: WatchlistTableProps) => {
   const navigate = useNavigate();
-  const { watchListData, editMode } = props;
+  const { watchListData, editMode, setSelectedSymbols } = props;
 
   const { data, loading } = useWatchlistPerformance(watchListData);
 
@@ -34,6 +35,14 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
     updateSymbols(symbols);
     // eslint-disable-next-line react-hooks/exhaustive-deps 
   }, [symbols]);
+
+  useEffect(() => {
+    const symbolsToDelete = Object.entries(listOfSymbolToggles)
+      .filter(([, checked]) => checked)
+      .map(([symbol]) => symbol);
+
+    setSelectedSymbols(symbolsToDelete)
+  }, [listOfSymbolToggles, setSelectedSymbols]);
 
   if (loading) return <div>Loading watchlist...</div>;
   return (
@@ -56,7 +65,8 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
             )}
           </TableHead>
           <TableHead className="text-left xl:table-cell">Name</TableHead>
-          <TableHead className="text-left hidden xl:table-cell">Type</TableHead>
+          <TableHead className="text-left xl:table-cell">Exchange</TableHead>
+          <TableHead className="text-left xl:table-cell">Type</TableHead>
           <TableHead className="text-left xl:table-cell">Price</TableHead>
           <TableHead className="text-left xl:table-cell">Change(%)</TableHead>
           <TableHead className="text-left hidden xl:table-cell">
@@ -95,6 +105,9 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
                 }
               >
                 {data.shortname}
+              </TableCell>
+              <TableCell className="text-left xl:table-cell" >
+                {data.exchange}
               </TableCell>
               <TableCell className="text-left hidden xl:table-cell">
                 {data.quoteType.toLowerCase()}
