@@ -14,9 +14,12 @@ import { useNavigate } from '@tanstack/react-router';
 
 export interface WatchlistTableProps {
   watchListData: Stock[];
+  editMode: boolean;
 }
-export const WatchlistTable = ({ watchListData }: WatchlistTableProps) => {
+
+export const WatchlistTable = ( props : WatchlistTableProps) => {
   const navigate = useNavigate();
+  const { watchListData, editMode } = props;
 
   const { data, loading } = useWatchlistPerformance(watchListData);
   if (loading) return <div>Loading watchlist...</div>;
@@ -25,6 +28,17 @@ export const WatchlistTable = ({ watchListData }: WatchlistTableProps) => {
       <TableCaption>A list of your recent watchlist.</TableCaption>
       <TableHeader>
         <TableRow className="h-24 xl:h-12">
+          <TableHead className={clsx("w-[40px] p-0", !editMode && "hidden")}>
+            {editMode && (
+                <div className="flex items-center justify-center h-full">
+                  <input
+                      type="checkbox"
+                      className="form-checkbox"
+                      onChange={() => {}}
+                  />
+                </div>
+            )}
+          </TableHead>
           <TableHead className="text-left xl:table-cell">Name</TableHead>
           <TableHead className="text-left hidden xl:table-cell">Type</TableHead>
           <TableHead className="text-left xl:table-cell">Price</TableHead>
@@ -47,6 +61,17 @@ export const WatchlistTable = ({ watchListData }: WatchlistTableProps) => {
                 })
               }
             >
+              <TableCell className={clsx("w-[40px] p-0", !editMode && "hidden")}>
+                {editMode && (
+                    <div className="flex items-center justify-center h-full">
+                      <input
+                          type="checkbox"
+                          className="form-checkbox"
+                          onChange={() => {}}
+                      />
+                    </div>
+                )}
+              </TableCell>
               <TableCell className="text-left xl:table-cell">
                 {data.shortname}
               </TableCell>
