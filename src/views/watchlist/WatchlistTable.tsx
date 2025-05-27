@@ -108,9 +108,6 @@ export const WatchlistTable = ({
                 {row.shortname}
               </TableCell>
               <TableCell className="text-left xl:table-cell" >
-                {data.exchange}
-              </TableCell>
-              <TableCell className="text-left xl:table-cell" >
                 {row.exchange}
               </TableCell>
               <TableCell className="text-left hidden xl:table-cell">
