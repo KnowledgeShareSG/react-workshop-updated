@@ -30,7 +30,6 @@ export interface StockSearchProps {
 
 export const StockSearch = ({ onSelect }: StockSearchProps) =>  {
     const {results, query, setQuery, loading} = useStockSearch();
-    console.log(results);
     return (
         <div>
             <Command className="w-full border">
@@ -50,7 +49,7 @@ export const StockSearch = ({ onSelect }: StockSearchProps) =>  {
                         {results.map((stock) => (
                             <CommandGroup key={stock.symbol}>
                                 <CommandItem onSelect={() => onSelect(stock)} className="cursor-pointer">
-                                    {stock.longname}
+                                    {stock.longname + ' @ ' + stock.exchange}
                                 </CommandItem>
                             </CommandGroup>
                         ))}
