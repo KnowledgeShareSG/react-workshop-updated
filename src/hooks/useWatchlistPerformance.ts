@@ -1,17 +1,17 @@
-import { useInstrumentDetails } from "@/views/instrument-details/useInstrumentDetails";
-import type {Stock} from "@/views/stock-search/StockSearch.tsx";
-import { useQuery } from "@tanstack/react-query";
-import {useMemo} from "react";
+import type { Stock } from '@/views/stock-search/StockSearch.tsx';
+import { useQuery } from '@tanstack/react-query';
+import { useMemo } from 'react';
 
 export interface WatchListStock extends Stock {
-    closedPrice: number[];
-    changeInPercent: number;
-    currentPrice: number | null;
-    timestampList: number[];
+  closedPrice: number[];
+  changeInPercent: number;
+  currentPrice: number | null;
+  timestampList: number[];
 }
 
-
-async function loadStocks(stocks: Array<Stock>): Promise<Array<WatchListStock>> {
+async function loadStocks(
+  stocks: Array<Stock>,
+): Promise<Array<WatchListStock>> {
   return await Promise.all(
     stocks.map(async (stock) => {
       const response = await fetch(
@@ -51,7 +51,7 @@ export const useWatchlistPerformance = (stocks: Stock[]) => {
   // we need to preserve the order of the stocks for react-query key purposes
   const stockSymbols = useMemo<string[]>(
     () => [...stocks.map((stock) => stock.symbol)],
-    [stocks]
+    [stocks],
   );
 
   const { data, isLoading: loading } = useQuery({
