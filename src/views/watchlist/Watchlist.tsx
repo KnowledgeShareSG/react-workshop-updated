@@ -109,7 +109,7 @@ export const Watchlist = () => {
                         icon={<SquarePen className="size-4"/>}
                         className="sm:w-auto whitespace-nowrap cursor-pointer"
                     >
-                        Edit
+                        <span className="hidden md:inline">Edit</span>
                     </Button>)}
                 </div>
             </div>

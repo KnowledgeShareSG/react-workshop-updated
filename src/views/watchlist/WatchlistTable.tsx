@@ -50,7 +50,26 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
     <Table>
       <TableCaption>A list of your recent watchlist.</TableCaption>
       <TableHeader>
-        <TableRow className="h-24 xl:h-12 cursor-pointer">
+        {/* Mobile/Tablet: 2 rows, 3 columns */}
+        <TableRow className="xl:hidden">
+          {/* First row: Grouped headings */}
+          {editMode && (
+          <TableHead className="text-center w-[40px] p-0">
+              <input
+                checked={allSelected}
+                type="checkbox"
+                className="form-checkbox"
+                onChange={() => toggleAll()}
+              />
+            </TableHead>
+          )}
+          <TableHead colSpan={3} className="text-center text-gray-500">Name / Exchange / Type</TableHead>
+          <TableHead colSpan={2} className="text-center text-gray-500">Price / Change(%)</TableHead>
+          <TableHead className="text-center text-gray-500">Performance</TableHead>
+        </TableRow>
+
+        {/* Desktop: original header */}
+        <TableRow className="h-24 xl:h-12 cursor-pointer hidden xl:table-row">
           <TableHead className={clsx('w-[40px] p-0', !editMode && 'hidden')}>
             {editMode && (
               <div className="flex items-center justify-center h-full">
@@ -65,12 +84,12 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
               </div>
             )}
           </TableHead>
-          <TableHead className="text-left xl:table-cell">Name</TableHead>
-          <TableHead className="text-left xl:table-cell">Exchange</TableHead>
-          <TableHead className="text-left xl:table-cell">Type</TableHead>
-          <TableHead className="text-left xl:table-cell">Price</TableHead>
-          <TableHead className="text-left xl:table-cell">Change(%)</TableHead>
-          <TableHead className="text-left hidden xl:table-cell">
+          <TableHead className="text-left xl:table-cell text-gray-500">Name</TableHead>
+          <TableHead className="text-left xl:table-cell text-gray-500">Exchange</TableHead>
+          <TableHead className="text-left xl:table-cell text-gray-500">Type</TableHead>
+          <TableHead className="text-left xl:table-cell text-gray-500">Price</TableHead>
+          <TableHead className="text-left xl:table-cell text-gray-500">Change(%)</TableHead>
+          <TableHead className="text-left hidden xl:table-cell text-gray-500">
             Performance
           </TableHead>
         </TableRow>
@@ -79,12 +98,11 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
       <TableBody>
         {data &&
           data.map((data) => (
-            <TableRow className="h-24 xl:h-12" key={data.symbol}>
-              <TableCell
-                className={clsx('w-[40px] p-0', !editMode && 'hidden')}
-              >
+            <>
+              {/* Mobile/Tablet grouped row (3 columns) */}
+              <TableRow className="xl:hidden" key={data.symbol + "-tablet"}>
                 {editMode && (
-                  <div className="flex items-center justify-center h-full">
+                  <TableCell className="w-[40px] p-0">
                     <input
                       checked={listOfSymbolToggles[data.symbol]}
                       type="checkbox"
@@ -96,48 +114,89 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
                         );
                       }}
                     />
+                  </TableCell>
+                )}
+                <TableCell className="min-w-0 flex-1 truncate">{data.shortname}</TableCell>
+                <TableCell className="min-w-0 flex-1 truncate">{data.exchange}</TableCell>
+                <TableCell className="min-w-0">{data.quoteType}</TableCell>
+                <TableCell className="whitespace-nowrap">${data.currentPrice?.toFixed(2)}</TableCell>
+                <TableCell className={clsx(
+                  'whitespace-nowrap',
+                  data.changeInPercent >= 0 ? 'text-green-600' : 'text-red-600'
+                )}>
+                  {`${data.changeInPercent >= 0 ? '+' : ''}${data.changeInPercent}%`}
+                </TableCell>
+                <TableCell className="w-12 p-0 align-middle">
+                  <div className="scale-75 origin-center">
+                    <MarketChartSmall
+                      symbol={data.symbol}
+                      color={data.changeInPercent >= 0 ? 'green' : 'red'}
+                    />
                   </div>
-                )}
-              </TableCell>
-              <TableCell
-                className="text-left xl:table-cell cursor-pointer"
-                onClick={() =>
-                  navigate({
-                    to: '/details/$symbol',
-                    params: { symbol: data.symbol },
-                  })
-                }
-              >
-                {data.shortname}
-              </TableCell>
-              <TableCell className="text-left xl:table-cell">
-                {data.exchange}
-              </TableCell>
-              <TableCell className="text-left hidden xl:table-cell">
-                {data.quoteType}
-              </TableCell>
-              <TableCell className="text-left xl:table-cell">
-                ${data.currentPrice?.toFixed(2)}
-              </TableCell>
-              <TableCell
-                className={clsx(
-                  'text-left xl:table-cell ',
-                  data.changeInPercent >= 0 ? 'text-green-600' : 'text-red-600',
-                )}
-              >
-                {`${data.changeInPercent >= 0 ? '+' : ''}${data.changeInPercent}%`}
-              </TableCell>
-              <TableCell className="text-left hidden xl:table-cell max-w-4">
-                <MarketChartSmall
-                  symbol={data.symbol}
-                  color={
-                    data.changeInPercent >= 0
-                      ? 'green'
-                      : 'red'
+                </TableCell>
+              </TableRow>
+
+              {/* Desktop row (original) */}
+              <TableRow className="h-24 xl:h-12 hidden xl:table-row" key={data.symbol}>
+                <TableCell
+                  className={clsx('w-[40px] p-0', !editMode && 'hidden')}
+                >
+                  {editMode && (
+                    <div className="flex items-center justify-center h-full">
+                      <input
+                        checked={listOfSymbolToggles[data.symbol]}
+                        type="checkbox"
+                        className="form-checkbox"
+                        onChange={() => {
+                          toggleOne(
+                            data.symbol,
+                            !listOfSymbolToggles[data.symbol],
+                          );
+                        }}
+                      />
+                    </div>
+                  )}
+                </TableCell>
+                <TableCell
+                  className="text-left xl:table-cell cursor-pointer"
+                  onClick={() =>
+                    navigate({
+                      to: '/details/$symbol',
+                      params: { symbol: data.symbol },
+                    })
                   }
-                />
-              </TableCell>
-            </TableRow>
+                >
+                  {data.shortname}
+                </TableCell>
+                <TableCell className="text-left xl:table-cell">
+                  {data.exchange}
+                </TableCell>
+                <TableCell className="text-left hidden xl:table-cell">
+                  {data.quoteType}
+                </TableCell>
+                <TableCell className="text-left xl:table-cell">
+                  ${data.currentPrice?.toFixed(2)}
+                </TableCell>
+                <TableCell
+                  className={clsx(
+                    'text-left xl:table-cell ',
+                    data.changeInPercent >= 0 ? 'text-green-600' : 'text-red-600',
+                  )}
+                >
+                  {`${data.changeInPercent >= 0 ? '+' : ''}${data.changeInPercent}%`}
+                </TableCell>
+                <TableCell className="text-left hidden xl:table-cell max-w-4">
+                  <MarketChartSmall
+                    symbol={data.symbol}
+                    color={
+                      data.changeInPercent >= 0
+                        ? 'green'
+                        : 'red'
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            </>
           ))}
       </TableBody>
     </Table>
