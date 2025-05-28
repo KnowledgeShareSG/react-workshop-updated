@@ -55,4 +55,4 @@ export function useInstrumentDetails(symbol: string) {
     queryKey: ['instrumentDetails', symbol],
     queryFn: () => fetchInstrumentDetails(symbol),
   });
-};
+}

@@ -3,7 +3,6 @@ import {
   type ChartResult,
   useInstrumentDetails,
 } from '@/views/instrument-details/useInstrumentDetails.ts';
-import { Suspense } from 'react';
 import { MarketChart } from '@/components/chart/chart.tsx';
 import { ErrorBoundary } from '@/components/shared/ErrorBoundary.tsx';
 import { InfoItem } from '@/components/shared/InfoItem.tsx';
@@ -13,17 +12,19 @@ interface DetailsViewProps {
   symbol: string;
 }
 export const DetailsView = ({ symbol }: DetailsViewProps) => {
-  const { data } = useInstrumentDetails(symbol);
+  const { data, isLoading } = useInstrumentDetails(symbol);
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   const chartResult = data as ChartResult;
   const { meta } = chartResult;
-
-  if (!chartResult) return null;
 
   return (
     <div className="pt-3 sm:pt-32">
       <div>
-        <h2 className="text-3xl font-semibold text-left">{`${meta.longName} (${meta.symbol})`}</h2>
-        <h6 className="text-base font-medium text-left">{`${meta.regularMarketPrice} ${meta.currency}`}</h6>
+        <h2 className="text-base sm:text-3xl font-semibold text-left">{`${meta.longName} (${meta.symbol})`}</h2>
+        <h6 className="text-xs sm:text-base font-medium text-left">{`${meta.regularMarketPrice} ${meta.currency}`}</h6>
       </div>
       <div className="grid grid-cols-1 gap-y-14 pt-6 lg:grid-cols-2 lg:gap-x-14 lg:gap-y-0">
         <MarketChart
@@ -83,9 +84,7 @@ export const DetailsWithErrorBoundary = () => {
   const { symbol } = useParams({ from: '/details/$symbol' });
   return (
     <ErrorBoundary>
-      <Suspense fallback={<Spinner />}>
-        <DetailsView symbol={symbol ?? ''} />
-      </Suspense>
+      <DetailsView symbol={symbol ?? ''} />
     </ErrorBoundary>
   );
 };
