@@ -88,14 +88,14 @@ export const Watchlist = () => {
                                 onClick={() => {setEditMode(false);}}
                                 icon={<CircleX />}
                                 variant="secondary"
-                                className="sm:w-auto whitespace-nowrap"
+                                className="hidden sm:inline-flex sm:w-auto whitespace-nowrap"
                             >
                                 Cancel
                             </Button>
                             <Button
                                 onClick={() => {deleteHandler()}}
                                 icon={<Trash2 />}
-                                className="sm:w-auto whitespace-nowrap"
+                                className="hidden sm:inline-flex sm:w-auto whitespace-nowrap"
                             >
                                 Delete
                             </Button>
@@ -120,6 +120,25 @@ export const Watchlist = () => {
                   setSelectedSymbols={setSelectedSymbols}
                 />
             </div>
+            {editMode && (
+                <div className="flex gap-3 mt-4 md:hidden justify-center w-full">
+                    <Button
+                        onClick={() => {setEditMode(false);}}
+                        variant="secondary"
+                        className="whitespace-nowrap cursor-pointer"
+                        icon={<CircleX />}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={() => {deleteHandler()}}
+                        className="sm:w-auto whitespace-nowrap cursor-pointer"
+                        icon={<Trash2 />}
+                    >
+                        Delete
+                    </Button>
+                </div>
+            )}
         </div>
     )
 }
