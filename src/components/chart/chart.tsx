@@ -15,6 +15,7 @@ import type {
 } from 'recharts/types/component/DefaultTooltipContent';
 import { useInstrumentDetails } from '@/views/instrument-details/useInstrumentDetails';
 import { useMemo } from 'react';
+import { Spinner } from '../shared/Spinner';
 
 interface MarketChartProps {
   timestampList: number[];
@@ -120,7 +121,7 @@ export function MarketChart({
 
 interface MarketChartSmallProps { symbol: string, color: 'green' | 'red' }
 export function MarketChartSmall({ symbol, color }: Readonly<MarketChartSmallProps>) {
-  const { data, isLoading } = useInstrumentDetails(symbol);
+  const { data, isLoading, isError, error } = useInstrumentDetails(symbol);
 
   const chartItems = useMemo(() => {
     if (isLoading) return [];
@@ -134,6 +135,11 @@ export function MarketChartSmall({ symbol, color }: Readonly<MarketChartSmallPro
   const min = Math.min(...prices);
   const max = Math.max(...prices);
   const padding = (max - min) * 0.01 || 1;
+
+  if (isLoading) {return <Spinner />}
+
+
+  if (isError) {return <span>{error.message}</span>}
 
   return (
     <div className="w-full h-10">

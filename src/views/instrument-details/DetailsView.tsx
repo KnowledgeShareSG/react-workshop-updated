@@ -11,6 +11,8 @@ import { useParams } from '@tanstack/react-router';
 interface DetailsViewProps {
   symbol: string;
 }
+
+// CODEALONG 04.01: code the whole thing
 export const DetailsView = ({ symbol }: DetailsViewProps) => {
   const { data, isLoading } = useInstrumentDetails(symbol);
   if (isLoading) {
