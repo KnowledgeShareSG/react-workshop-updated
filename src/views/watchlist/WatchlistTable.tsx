@@ -25,7 +25,9 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
   const navigate = useNavigate();
   const { watchListData, editMode, setSelectedSymbols } = props;
 
+  // CODEALONG 03.01: populate the search results
   const { data, loading } = useWatchlistPerformance(watchListData);
+  // const data: Array<WatchListStock> = [] , loading = false;
 
   const symbols = useMemo(() => watchListData.map((item) => item.symbol) , [watchListData]);
 
@@ -46,6 +48,22 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
   }, [listOfSymbolToggles, setSelectedSymbols]);
 
   if (loading) return <div>Loading watchlist...</div>;
+  // // CODEALONG 03.02: populate the table
+  // return (
+  //   <div>{watchListData
+  //     .map((stock,index) => (
+  //       <a
+  //         key={stock.symbol}
+  //         href="javascript:void(0)"
+  //         onClick={() =>
+  //           navigate({
+  //             to: '/details/$symbol',
+  //             params: { symbol: stock.symbol },
+  //           })
+  //        }>{index > 0 ? ' , ':''}{stock.symbol}</a>
+  //     ))}
+  //   </div>
+  // );
   return (
     <Table>
       <TableCaption>A list of your recent watchlist.</TableCaption>

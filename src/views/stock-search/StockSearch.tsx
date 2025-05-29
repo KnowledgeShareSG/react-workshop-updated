@@ -1,66 +1,91 @@
 import {
-    Command,
-    CommandList,
-    CommandItem,
-    CommandInput, CommandGroup
-} from "@/components/ui/command.tsx";
+  Command,
+  CommandList,
+  CommandItem,
+  CommandInput,
+  CommandGroup,
+  CommandShortcut,
+  CommandEmpty,
+} from '@/components/ui/command.tsx';
 import {useStockSearch} from "@/hooks/useStockSearch.ts";
+import { useState } from 'react';
 
 export interface Stock {
-    exchange: string;
-    shortname: string;
-    quoteType: string;
-    symbol: string;
-    index: string;
-    score: number;
-    typeDisp: string;
-    longname: string;
-    exchDisp: string;
-    sector: string;
-    sectorDisp: string;
-    industry: string;
-    industryDisp: string;
-    dispSecIndFlag: boolean;
-    isYahooFinance: boolean;
+  exchange: string;
+  shortname: string;
+  quoteType: string;
+  symbol: string;
+  index: string;
+  score: number;
+  typeDisp: string;
+  longname: string;
+  exchDisp: string;
+  sector: string;
+  sectorDisp: string;
+  industry: string;
+  industryDisp: string;
+  dispSecIndFlag: boolean;
+  isYahooFinance: boolean;
 }
+
+interface SearchResultProps {
+  stock: Stock;
+  onSelect: (stock: Stock) => void;
+};
+
+const SearchResult = ({ stock, onSelect }: SearchResultProps) => (
+  <CommandItem onSelect={() => onSelect(stock)} className="cursor-pointer" value={stock.longname + '___' + stock.exchange} key={stock.longname + '___' + stock.exchange}>
+    {stock.longname}
+    <CommandShortcut>
+      {stock.exchange}
+    </CommandShortcut>
+  </CommandItem>
+);
 
 export interface StockSearchProps {
-    onSelect: (stock: Stock) => void;
+  onSelect: (stock: Stock) => void;
 }
 
-export const StockSearch = ({ onSelect }: StockSearchProps) =>  {
-    const {results, query, setQuery, loading} = useStockSearch();
-    return (
-        <div>
-            <Command className="w-full border">
-                <CommandInput
-                    placeholder="Search stocks by name or symbol..."
-                    value={query}
-                    onValueChange={setQuery}
-                    className="w-full h-10 px-3 text-sm"
+export const StockSearch = ({ onSelect }: StockSearchProps) => {
+  // CODEALONG 02.01: change the input into a controlled input + link with search query
+  const [searchTerm, setSearchTerm] = useState('');
+  // CODEALONG 02.02: change the input into a controlled input + link with search query
+  const { results, loading } = useStockSearch(searchTerm);
+  return (
+    <div>
+      <Command className="w-full border">
+        <CommandInput
+          placeholder="Search stocks by name or symbol..."
+          value={searchTerm} // let the input accept the searchTerm
+          onValueChange={setSearchTerm} // update the state when input is changed
+          className="w-full h-10 px-3 text-sm"
+        />
+        {loading && (
+          <div className="p-4 text-center text-sm text-gray-500">
+            Loading...
+          </div>
+        )}
+        {!loading && results.length > 0 && (
+          <CommandList className="max-h-60 overflow-y-auto">
+            <CommandGroup>
+              {/* CODEALONG 02.03 */}
+              {results.map((stock) => (
+                <SearchResult
+                  stock={stock}
+                  onSelect={onSelect}
+                  key={stock.symbol + '_' + stock.exchange}
                 />
-                {loading && (
-                    <div className="p-4 text-center text-sm text-gray-500">
-                        Loading...
-                    </div>
-                )}
-                {!loading && results.length > 0 && (
-                    <CommandList className="max-h-60 overflow-y-auto">
-                        {results.map((stock) => (
-                            <CommandGroup key={stock.symbol}>
-                                <CommandItem onSelect={() => onSelect(stock)} className="cursor-pointer">
-                                    {stock.longname + ' @ ' + stock.exchange}
-                                </CommandItem>
-                            </CommandGroup>
-                        ))}
-                    </CommandList>
-                )}
-                {!loading && query && results.length === 0 && (
-                    <div className="p-4 text-center text-sm text-gray-500">
-                        No results found
-                    </div>
-                )}
-            </Command>
-        </div>
-    )
-}
+              ))}
+            </CommandGroup>
+          </CommandList>
+        )}
+        {!loading && searchTerm && results.length === 0 && (
+          <CommandEmpty>
+            No results found
+          </CommandEmpty>
+        )}
+      </Command>
+    </div>
+  );
+};
+
