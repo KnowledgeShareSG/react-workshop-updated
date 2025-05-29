@@ -116,7 +116,7 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
                   </TableCell>
                 )}
                 <TableCell 
-                  className="font-bold truncate w-24 max-w-[40vw] cursor-pointer"
+                  className="text-left truncate w-24 max-w-[40vw] cursor-pointer p-4 md:p-2"
                   onClick={() =>
                     navigate({
                       to: '/details/$symbol',
@@ -126,7 +126,7 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
                 >
                   {data.shortname}
                 </TableCell>
-                <TableCell>
+                <TableCell className="p-4 md:p-2">
                   <div className="whitespace-nowrap">${data.currentPrice?.toFixed(2)}</div>
                   <div className={clsx(
                     'whitespace-nowrap',
@@ -135,7 +135,7 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
                     {`${data.changeInPercent >= 0 ? '+' : ''}${data.changeInPercent}%`}
                   </div>
                 </TableCell>
-                <TableCell className="w-24 p-0 align-middle">
+                <TableCell className="w-24 p-4 md:p-2 align-middle">
                   <div className="w-20 h-8 flex items-center justify-center">
                     <MarketChartSmall
                       symbol={data.symbol}
@@ -163,7 +163,7 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
                   </TableCell>
                 )}
                 <TableCell 
-                  className="min-w-0 flex-1 truncate cursor-pointer"
+                  className="min-w-0 flex-1 truncate cursor-pointer p-4"
                   onClick={() =>
                     navigate({
                       to: '/details/$symbol',
@@ -173,16 +173,16 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
                 >
                   {data.shortname}
                 </TableCell>
-                <TableCell className="min-w-0 flex-1 truncate">{data.exchange}</TableCell>
-                <TableCell className="min-w-0">{data.quoteType}</TableCell>
-                <TableCell className="whitespace-nowrap">${data.currentPrice?.toFixed(2)}</TableCell>
+                <TableCell className="min-w-0 flex-1 truncate p-4">{data.exchange}</TableCell>
+                <TableCell className="min-w-0 p-4">{data.quoteType}</TableCell>
+                <TableCell className="whitespace-nowrap p-4">${data.currentPrice?.toFixed(2)}</TableCell>
                 <TableCell className={clsx(
-                  'whitespace-nowrap',
+                  'whitespace-nowrap p-4',
                   data.changeInPercent >= 0 ? 'text-green-600' : 'text-red-600'
                 )}>
                   {`${data.changeInPercent >= 0 ? '+' : ''}${data.changeInPercent}%`}
                 </TableCell>
-                <TableCell className="w-12 p-0 align-middle">
+                <TableCell className="w-12 p-4 align-middle">
                   <div className="scale-75 origin-center">
                     <MarketChartSmall
                       symbol={data.symbol}

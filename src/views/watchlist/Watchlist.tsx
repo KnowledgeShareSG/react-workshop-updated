@@ -70,7 +70,10 @@ export const Watchlist = () => {
                                     </Button>
                                 </DialogTrigger>
 
-                                <DialogContent className="p-0 max-w-md w-full sm:w-[500px] top-34 translate-y-0 overflow-hidden">
+                                <DialogContent className="
+                                  w-screen h-screen max-w-none max-h-none p-0 m-0 rounded-none overflow-hidden
+                                  sm:w-[500px] sm:h-auto sm:rounded-lg sm:max-w-md sm:top-34 sm:translate-y-0
+                                ">
                                     <DialogTitle className="sr-only">Search Stocks</DialogTitle>
                                     <StockSearch
                                         onSelect={(stock) => {
@@ -100,7 +103,6 @@ export const Watchlist = () => {
                                 Delete
                             </Button>
                         </>
-
                     )}
 
                     {!editMode && (
@@ -121,7 +123,7 @@ export const Watchlist = () => {
                 />
             </div>
             {editMode && (
-                <div className="flex gap-3 mt-4 md:hidden justify-center w-full">
+                <div className="flex gap-3 mt-4 sm:hidden justify-center w-full">
                     <Button
                         onClick={() => {setEditMode(false);}}
                         variant="secondary"
