@@ -37,16 +37,9 @@ interface ChartResponse {
 }
 
 const fetchInstrumentDetails = async (symbol: string): Promise<ChartResult> => {
-  const response = await fetch(
-    `https://octopus-app-3grc6.ondigitalocean.app/yahoo/chart/${symbol}`,
-  );
-
-  if (!response.ok) {
-    throw new Error(`API error: ${response.status}`);
-  }
-
+  const response = await fetch(`https://octopus-app-3grc6.ondigitalocean.app/yahoo/chart/${symbol}`,);
+  if (!response.ok) throw new Error(`API error: ${response.status}`);
   const data: ChartResponse = await response.json();
-
   return data.chart?.result[0];
 };
 

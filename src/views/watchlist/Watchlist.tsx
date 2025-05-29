@@ -70,7 +70,6 @@ export const Watchlist = () => {
                 onOpenChange={(opened) => {
                   // CODEALONG 01
                   // open the dialog
-                  setOpen(opened);
                 }}
               >
                 <DialogTrigger asChild>
