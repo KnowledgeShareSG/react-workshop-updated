@@ -159,6 +159,7 @@ Download and install VS Code from [code.visualstudio.com](https://code.visualstu
 5. **Thunder Client** - API testing tool (alternative to Postman)
 
 **Recommended Extensions:**
+
 6. **GitLens** - Enhanced Git capabilities
 7. **Live Server** - Launch development local server
 8. **Path Intellisense** - Autocompletes filenames
@@ -211,10 +212,14 @@ git --version
 
 ## Project Setup
 ### Install dependencies
+```bash
 npm install
+```
 
 ### Start development server
+```bash
 npm run dev
+```
 
 
 # React + TypeScript + Vite
