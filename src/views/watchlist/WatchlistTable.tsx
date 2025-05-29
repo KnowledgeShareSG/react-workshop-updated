@@ -115,7 +115,17 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
                     />
                   </TableCell>
                 )}
-                <TableCell className="font-bold truncate w-24 max-w-[40vw]">{data.shortname}</TableCell>
+                <TableCell 
+                  className="font-bold truncate w-24 max-w-[40vw] cursor-pointer"
+                  onClick={() =>
+                    navigate({
+                      to: '/details/$symbol',
+                      params: { symbol: data.symbol },
+                    })
+                  }
+                >
+                  {data.shortname}
+                </TableCell>
                 <TableCell>
                   <div className="whitespace-nowrap">${data.currentPrice?.toFixed(2)}</div>
                   <div className={clsx(
@@ -152,7 +162,17 @@ export const WatchlistTable = (props: WatchlistTableProps) => {
                     />
                   </TableCell>
                 )}
-                <TableCell className="min-w-0 flex-1 truncate">{data.shortname}</TableCell>
+                <TableCell 
+                  className="min-w-0 flex-1 truncate cursor-pointer"
+                  onClick={() =>
+                    navigate({
+                      to: '/details/$symbol',
+                      params: { symbol: data.symbol },
+                    })
+                  }
+                >
+                  {data.shortname}
+                </TableCell>
                 <TableCell className="min-w-0 flex-1 truncate">{data.exchange}</TableCell>
                 <TableCell className="min-w-0">{data.quoteType}</TableCell>
                 <TableCell className="whitespace-nowrap">${data.currentPrice?.toFixed(2)}</TableCell>
