@@ -53,7 +53,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {icon && <span className="sm:mr-1">{icon}</span>}
-        {children && <span className="hidden sm:inline">{children}</span>}
+        {children && <span className="">{children}</span>}
       </Comp>
     )
   }

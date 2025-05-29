@@ -70,7 +70,10 @@ export const Watchlist = () => {
                                     </Button>
                                 </DialogTrigger>
 
-                                <DialogContent className="p-0 max-w-md w-full sm:w-[500px] top-34 translate-y-0 overflow-hidden">
+                                <DialogContent className="
+                                  w-screen h-screen max-w-none max-h-none p-0 m-0 rounded-none overflow-hidden
+                                  sm:w-[500px] sm:h-auto sm:rounded-lg sm:max-w-md sm:top-34 sm:translate-y-0
+                                ">
                                     <DialogTitle className="sr-only">Search Stocks</DialogTitle>
                                     <StockSearch
                                         onSelect={(stock) => {
@@ -88,19 +91,18 @@ export const Watchlist = () => {
                                 onClick={() => {setEditMode(false);}}
                                 icon={<CircleX />}
                                 variant="secondary"
-                                className="sm:w-auto whitespace-nowrap"
+                                className="hidden sm:inline-flex sm:w-auto whitespace-nowrap"
                             >
                                 Cancel
                             </Button>
                             <Button
                                 onClick={() => {deleteHandler()}}
                                 icon={<Trash2 />}
-                                className="sm:w-auto whitespace-nowrap"
+                                className="hidden sm:inline-flex sm:w-auto whitespace-nowrap"
                             >
                                 Delete
                             </Button>
                         </>
-
                     )}
 
                     {!editMode && (
@@ -109,7 +111,7 @@ export const Watchlist = () => {
                         icon={<SquarePen className="size-4"/>}
                         className="sm:w-auto whitespace-nowrap cursor-pointer"
                     >
-                        Edit
+                        <span className="hidden md:inline">Edit</span>
                     </Button>)}
                 </div>
             </div>
@@ -120,6 +122,25 @@ export const Watchlist = () => {
                   setSelectedSymbols={setSelectedSymbols}
                 />
             </div>
+            {editMode && (
+                <div className="flex gap-3 mt-4 sm:hidden justify-center w-full">
+                    <Button
+                        onClick={() => {setEditMode(false);}}
+                        variant="secondary"
+                        className="whitespace-nowrap cursor-pointer"
+                        icon={<CircleX />}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={() => {deleteHandler()}}
+                        className="sm:w-auto whitespace-nowrap cursor-pointer"
+                        icon={<Trash2 />}
+                    >
+                        Delete
+                    </Button>
+                </div>
+            )}
         </div>
     )
 }
